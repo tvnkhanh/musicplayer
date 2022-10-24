@@ -1,0 +1,134 @@
+* {
+    -button-color: #d1d1d1;
+    -black-color: #000;
+    -white-color: #fff;
+    -playlist-color: #1a1a1a;
+    -playlist-hover-color: #272727;
+    -content-page-color: #121212;
+    -music-player-color: #181818;
+    -user-menu-avatar-bg-color: #282828;
+    -fx-font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, "Helvetica Neue", helvetica, arial, "Hiragino Kaku Gothic Pro", Meiryo, "MS Gothic";
+}
+
+.button {
+    -fx-background-color: -black-color;
+    -fx-text-fill: -button-color;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-font-style: normal;
+    -fx-alignment: LEFT;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-text-fill: -white-color;
+}
+
+#sideBar {
+    -fx-background-color: -black-color;
+
+}
+
+.home-content-pane {
+    -fx-background-color: transparent;
+}
+
+.contentPane {
+    -fx-background-color: -content-page-color;
+}
+
+.music-media-player, #playBtn, #pauseBtn, #prevBtn, #nextBtn, #shuffleBtn, #loopBtn, #volumeBtn {
+    -fx-background-color: -music-player-color;
+}
+
+.navbar {
+    -fx-background-color: -black-color;
+}
+
+.user-menu {
+    -fx-background-color: -user-menu-avatar-bg-color;
+
+}
+
+.user-menu .label {
+    -fx-text-fill: -white-color;
+    -fx-font-weight: 400;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.menu-item .label {
+    -fx-text-fill: -white-color;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-padding: 4;
+}
+
+.menu-item:focused {
+     -fx-background-color: #3E3E3E;
+     -fx-cursor: hand;
+}
+
+.context-menu {
+    /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/
+    -fx-background-color: black;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em;
+}
+
+.playlist-field {
+    -fx-alignment: center;
+}
+
+.banner {
+    -fx-padding: 160;
+}
+
+.playlist {
+    -fx-background-color: -playlist-color;
+    -fx-background-radius: 5px;
+    -fx-position-shape: true;
+    -fx-padding: 14;
+    -fx-cursor: hand;
+}
+
+.playlist:hover {
+    -fx-background-color: -playlist-hover-color;
+}
+
+.topic-playlist, .playlist-name {
+    -fx-text-fill: -white-color;
+}
+
+.topic-playlist {
+    -fx-font-weight: 700;
+    -fx-font-size: 24px;
+    -fx-padding: 34;
+    -fx-translate-Y: -24;
+}
+
+.playlist-tray {
+    -fx-padding: 50;
+    -fx-translate-Y: -100;
+}
+
+.playlist-name {
+    -fx-font-weight: 700;
+    -fx-font-size: 16px;
+}
+
+.artist-playlist {
+    -fx-font-weight: 400;
+    -fx-font-size: 16px;
+    -fx-text-fill: #b3b3b3;
+}
+
+.img-playlist {
+    -fx-padding: 4;
+    -fx-background-color: -white-color;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+
