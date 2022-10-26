@@ -7,6 +7,8 @@
     -content-page-color: #121212;
     -music-player-color: #181818;
     -user-menu-avatar-bg-color: #282828;
+    -playlist-page-content-color: #0F151D;
+    -playlist-text-theme-color: #b3b3b3;
     -fx-font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, "Helvetica Neue", helvetica, arial, "Hiragino Kaku Gothic Pro", Meiryo, "MS Gothic";
 }
 
@@ -16,7 +18,7 @@
     -fx-font-size: 14px;
     -fx-font-weight: 700;
     -fx-font-style: normal;
-    -fx-alignment: LEFT;
+    -fx-alignment: center-left;
     -fx-cursor: hand;
 }
 
@@ -37,8 +39,31 @@
     -fx-background-color: -content-page-color;
 }
 
-.music-media-player, #playBtn, #pauseBtn, #prevBtn, #nextBtn, #shuffleBtn, #loopBtn, #volumeBtn {
+.music-media-player, .media-player-btn {
     -fx-background-color: -music-player-color;
+}
+
+.song-name-corner {
+    -fx-font-size: 18px;
+    -fx-font-weight: 500;
+    -fx-text-fill: -white-color;
+}
+
+.artist-name-corner {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -playlist-text-theme-color;
+}
+
+.duration {
+    -fx-font-size: 11px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #a7a7a7;
+    -fx-alignment: center;
+}
+
+.progress-bar {
+    -fx-alignment: center;
 }
 
 .navbar {
@@ -47,7 +72,6 @@
 
 .user-menu {
     -fx-background-color: -user-menu-avatar-bg-color;
-
 }
 
 .user-menu .label {
@@ -71,10 +95,11 @@
 
 .context-menu {
     /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/
-    -fx-background-color: black;
+    -fx-background-color: -black-color;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
     -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em;
+    -fx-translate-X: -50;
 }
 
 .playlist-field {

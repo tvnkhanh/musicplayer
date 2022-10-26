@@ -7,6 +7,7 @@ module ptit.tvnkhanh.musicplayerproject {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires javafx.media;
 
     opens ptit.tvnkhanh.musicplayerproject to javafx.fxml;
     exports ptit.tvnkhanh.musicplayerproject;

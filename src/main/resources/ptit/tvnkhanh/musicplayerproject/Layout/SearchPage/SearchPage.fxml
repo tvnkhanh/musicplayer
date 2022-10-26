@@ -4,8 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.SearchPageController">
+<AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.SearchPageController">
    <children>
       <Pane fx:id="sideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="214.0">
          <children>
@@ -64,75 +62,6 @@
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Images/icons8-home-36.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="playerPane" layoutY="649.0" prefHeight="102.0" prefWidth="1510.0" styleClass="music-media-player">
-         <children>
-            <ProgressBar fx:id="musicProgressBar" layoutX="410.0" layoutY="73.0" prefHeight="6.0" prefWidth="688.0" progress="0.0" />
-            <Button fx:id="playBtn" layoutX="737.0" layoutY="19.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="36.0" prefWidth="36.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-circled-play-36.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="prevBtn" layoutX="644.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-skip-to-start-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="nextBtn" layoutX="830.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-end-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="shuffleBtn" layoutX="558.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-shuffle-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="loopBtn" layoutX="913.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-update-left-rotation-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="volumeBtn" layoutX="1239.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-voice-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Slider fx:id="volumeSlider" layoutX="1290.0" layoutY="37.0" minHeight="-Infinity" prefHeight="6.0" prefWidth="130.0" styleClass="media-player-btn" value="100.0" />
-            <Button fx:id="pauseBtn" layoutX="731.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="36.0" styleClass="media-player-btn" visible="false">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../../Images/icons8-pause-button-36.png" />
                      </image>
                   </ImageView>
                </graphic>

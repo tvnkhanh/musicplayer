@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.PlaylistPageController">
+<AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.PlaylistPageController">
    <children>
-      <Pane fx:id="sideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="214.0">
+      <Pane fx:id="sideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="651.0" prefWidth="203.0">
          <children>
             <ImageView fitHeight="44.0" fitWidth="166.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -69,75 +72,6 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="playerPane" layoutY="649.0" prefHeight="102.0" prefWidth="1510.0" styleClass="music-media-player">
-         <children>
-            <ProgressBar fx:id="musicProgressBar" layoutX="410.0" layoutY="73.0" prefHeight="6.0" prefWidth="688.0" progress="0.0" />
-            <Button fx:id="playBtn" layoutX="737.0" layoutY="19.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="36.0" prefWidth="36.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-circled-play-36.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="prevBtn" layoutX="644.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-skip-to-start-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="nextBtn" layoutX="830.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-end-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="shuffleBtn" layoutX="558.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-shuffle-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="loopBtn" layoutX="913.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-update-left-rotation-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="volumeBtn" layoutX="1239.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="22.0" styleClass="media-player-btn">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/icons8-voice-28.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Slider fx:id="volumeSlider" layoutX="1290.0" layoutY="37.0" minHeight="-Infinity" prefHeight="6.0" prefWidth="130.0" styleClass="media-player-btn" value="100.0" />
-            <Button fx:id="pauseBtn" layoutX="731.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="36.0" styleClass="media-player-btn" visible="false">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../../Images/icons8-pause-button-36.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </Pane>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
             <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
@@ -160,9 +94,87 @@
             </MenuButton>
          </children>
       </Pane>
-      <ScrollPane layoutX="200.0" layoutY="50.0" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
+      <ScrollPane layoutX="202.0" layoutY="50.0" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
          <content>
-            <AnchorPane prefHeight="655.0" prefWidth="1291.0" styleClass="contentPane" />
+            <AnchorPane prefHeight="655.0" prefWidth="1291.0" styleClass="contentPane">
+               <children>
+                  <VBox fx:id="contentPlaylistContainer" layoutX="55.0" prefHeight="674.0" prefWidth="1179.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="playlist-page-banner">
+                           <children>
+                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../395eb4a5e6aa04c8574425345cd816f5.894x894x1.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="225.0" layoutY="44.0" styleClass="lbl-playlist-page" text="Playlist" />
+                              <Label layoutX="227.0" layoutY="166.0" styleClass="playlist-info" text="Label">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label layoutX="227.0" layoutY="53.0" prefHeight="88.0" prefWidth="928.0" styleClass="lbl-playlist-name" text="Label">
+                                 <font>
+                                    <Font size="60.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="228.0" layoutY="129.0" styleClass="artist-info" text="Label">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="30.0" left="20.0" top="30.0" />
+                           </VBox.margin>
+                        </Pane>
+                        <Pane>
+                           <VBox.margin>
+                              <Insets bottom="30.0" left="30.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="playBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="playlist-btn-special">
+                                 <graphic>
+                                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Images/icons8-play-button-circled-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="pauseBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="media-player-btn" visible="false">
+                                 <graphic>
+                                    <ImageView fx:id="pauseImg" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Images/icons8-pause-button-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <HBox prefHeight="60.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="playlist-header" text="#">
+                                 <HBox.margin>
+                                    <Insets right="30.0" />
+                                 </HBox.margin></Label>
+                              <Label styleClass="playlist-header" text="TITLE">
+                                 <HBox.margin>
+                                    <Insets right="600.0" />
+                                 </HBox.margin></Label>
+                              <Label styleClass="playlist-header" text="ALBUM">
+                                 <HBox.margin>
+                                    <Insets right="300.0" />
+                                 </HBox.margin></Label>
+                              <Label styleClass="playlist-header" text="DURATION" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="30.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
          </content>
       </ScrollPane>
    </children>
