@@ -1,16 +1,19 @@
 package ptit.tvnkhanh.musicplayerproject;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,18 +23,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Arrays;
 
 public class Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    public static boolean running = false;
     private double prefWidthApp = 1510;
     private double prefHeightApp = 750;
     private double prefHeightPlayer = 102;
@@ -42,6 +44,10 @@ public class Controller {
 
 
     // Variable handle logic play, pause, shuffle, loop and volume event
+    public static boolean isRunning = false;
+    public static boolean isLoop = false;
+    public static boolean isShuffle = false;
+    public static boolean isMute = false;
     public static int songNumber;
     public static ArrayList<File> songs;
     public static Media media;
@@ -49,8 +55,8 @@ public class Controller {
 
     public static File directory;
     public static File[] files;
-    public static Timer timer;
-    public static TimerTask task;
+    public static Timeline timeLine;
+    public static  double volumeValue = 1;
 //    Switch Page Method:
     public void switchToHomePage(ActionEvent e) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Layout/HomePage/HomePage.fxml"));
@@ -258,21 +264,26 @@ public class Controller {
         Button nextBtn = new Button();
         Button loopBtn = new Button();
         ImageView shuffleImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-shuffle-28.png")));
+        ImageView activeShuffleImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-active-shuffle-28.png")));
         ImageView prevImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-skip-to-start-28.png")));
         ImageView playImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-circled-play-36.png")));
         ImageView pauseImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-pause-button-36.png")));
         ImageView nextImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-end-28.png")));
         ImageView loopImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-update-left-rotation-28.png")));
+        ImageView activeLoopImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-active-update-left-rotation-28.png")));
 
         HBox songProgressContainer = new HBox();
         Label timeStart = new Label();
         Label timeEnd = new Label();
+        StackPane slidoProgressBar = new StackPane();
+        Slider songSlider = new Slider();
         ProgressBar songProgressBar = new ProgressBar();
         // ===================================
         HBox volumeSettingContainer = new HBox();
 
         Button volumeBtn = new Button();
         ImageView volumeImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-voice-28.png")));
+        ImageView muteImg = new ImageView(new Image(this.getClass().getResourceAsStream("Images/icons8-mute-28.png")));
         Slider volumeSlider = new Slider();
 
         // ====================================
@@ -280,11 +291,8 @@ public class Controller {
         double imgBtnSize = 20;
         double playPauseBtnSize = 36;
         double playPauseImgSize = 32;
-        double progressBarHeightSize = 6;
+        double progressBarHeightSize = 10;
         double progressBarWidthSize = prefWidthPlayerControllerContainer - 40 * 2;
-
-        // Create variable for handle logic
-
 
         // Render UI
         wrapper.setPrefWidth(prefWidthApp);
@@ -292,7 +300,6 @@ public class Controller {
         wrapper.setLayoutX(0);
         wrapper.setLayoutY(prefHeightApp - prefHeightPlayer);
         wrapper.getStyleClass().add("music-media-player");
-
 
         songInfoContainer.setPrefWidth(prefWidthSongInfoCorner);
         songInfoContainer.setPrefHeight(prefHeightPlayer);
@@ -326,6 +333,8 @@ public class Controller {
         shuffleBtn.setPrefHeight(btnSize);
         shuffleImg.setFitWidth(imgBtnSize);
         shuffleImg.setFitHeight(imgBtnSize);
+        activeShuffleImg.setFitWidth(imgBtnSize);
+        activeShuffleImg.setFitHeight(imgBtnSize);
         prevBtn.setPrefWidth(btnSize);
         prevBtn.setPrefHeight(btnSize);
         prevImg.setFitWidth(imgBtnSize);
@@ -344,13 +353,15 @@ public class Controller {
         loopBtn.setPrefHeight(btnSize);
         loopImg.setFitWidth(imgBtnSize);
         loopImg.setFitHeight(imgBtnSize);
+        activeLoopImg.setFitWidth(imgBtnSize);
+        activeLoopImg.setFitHeight(imgBtnSize);
         shuffleBtn.getStyleClass().add("media-player-btn");
         prevBtn.getStyleClass().add("media-player-btn");
         playPauseBtn.getStyleClass().add("media-player-btn");
         nextBtn.getStyleClass().add("media-player-btn");
         loopBtn.getStyleClass().add("media-player-btn");
         volumeBtn.getStyleClass().add("media-player-btn");
-        if (running == true) {
+        if (isRunning == true) {
             playPauseBtn.setGraphic(pauseImg);
             playerController.getChildren().addAll(shuffleBtn, prevBtn, playPauseBtn, nextBtn, loopBtn);
         } else {
@@ -360,17 +371,21 @@ public class Controller {
         playerController.setAlignment(Pos.CENTER);
         playerController.setPadding(new Insets(20, 150, 0, 150));
         playerController.setSpacing(24);
-        timeStart.setText("0:00");
         timeStart.setPrefWidth(30);
         timeStart.getStyleClass().add("duration");
-        timeEnd.setText("3:04");
         timeEnd.setPrefWidth(30);
         timeEnd.getStyleClass().add("duration");
+        songSlider.setPrefWidth(progressBarWidthSize);
+        songSlider.setPrefHeight(progressBarHeightSize);
+        songSlider.setMin(0);
+        songSlider.setMax(1);
+        songSlider.getStyleClass().add("slider-progress-bar");
         songProgressBar.setPrefWidth(progressBarWidthSize);
         songProgressBar.setPrefHeight(progressBarHeightSize);
-        songProgressContainer.getChildren().addAll(timeStart, songProgressBar, timeEnd);
+        slidoProgressBar.getChildren().addAll(songProgressBar, songSlider);
+        slidoProgressBar.setPadding(new Insets(0, 0, 34, 0));
+        songProgressContainer.getChildren().addAll(timeStart, slidoProgressBar, timeEnd);
         songProgressContainer.setSpacing(8);
-        songProgressContainer.setAlignment(Pos.BASELINE_CENTER);
         playerControllerContainer.getChildren().addAll(playerController, songProgressContainer);
 
         volumeSettingContainer.setPrefWidth(prefWidthSongVolume);
@@ -380,7 +395,12 @@ public class Controller {
         volumeBtn.setPrefHeight(btnSize);
         volumeImg.setFitWidth(imgBtnSize);
         volumeImg.setFitHeight(imgBtnSize);
+        muteImg.setFitWidth(imgBtnSize);
+        muteImg.setFitHeight(imgBtnSize);
         volumeSlider.setPrefWidth(130);
+        volumeSlider.setValue(volumeValue);
+        volumeSlider.setMin(0);
+        volumeSlider.setMax(1);
         volumeSettingContainer.getChildren().addAll(volumeBtn, volumeSlider);
         volumeSettingContainer.setAlignment(Pos.BASELINE_CENTER);
         volumeSettingContainer.setSpacing(6);
@@ -389,51 +409,177 @@ public class Controller {
         wrapper.getChildren().addAll(songInfoContainer, playerControllerContainer, volumeSettingContainer);
 
         // Handle logic
+        playPauseBtn.setOnAction(actionEvent -> playPauseSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider));
+        nextBtn.setOnAction(actionEvent -> nextSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider));
+        prevBtn.setOnAction(actionEvent -> prevSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider));
+        trackProgress(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+        songSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                timeLine.stop();
+                timeLine.getKeyFrames().clear();
+                timeLine = null;
+                double current = (mouseEvent.getX() / songSlider.getWidth()) * songSlider.getMax();
+                double end = media.getDuration().toSeconds();
+                mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(current));
+                if (isRunning == false) {
+                    playPauseSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+                } else
+                    trackProgress(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+            }
+        });
 
-        playPauseBtn.setOnAction(actionEvent -> playPauseSong(mediaPlayer, playPauseBtn, playImg, pauseImg));
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                volumeValue = volumeSlider.getValue();
+                if (volumeValue > 0) {
+                    isMute = false;
+                    volumeBtn.setGraphic(volumeImg);
+                } else {
+                    isMute = true;
+                    volumeBtn.setGraphic(muteImg);
+                }
+                mediaPlayer.setVolume(volumeValue);
+            }
+        });
 
+        volumeBtn.setOnAction(actionEvent -> {
+            if (isMute == false) {
+                mediaPlayer.setVolume(0);
+                volumeSlider.setValue(0);
+                volumeBtn.setGraphic(muteImg);
+                isMute = true;
+            }
+        });
+
+        loopBtn.setOnAction(actionEvent -> {
+            if (isLoop == false) {
+                loopSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+                isLoop = true;
+                loopBtn.setGraphic(activeLoopImg);
+            } else {
+                isLoop = false;
+                loopBtn.setGraphic(loopImg);
+            }
+        });
+
+        shuffleBtn.setOnAction(actionEvent -> {
+            if (isShuffle == false) {
+                shuffleBtn.setGraphic(activeShuffleImg);
+                isShuffle = true;
+            } else {
+                shuffleBtn.setGraphic(shuffleImg);
+                isShuffle = false;
+            }
+        });
 
         return wrapper;
     }
 
 
-    public void playPauseSong(MediaPlayer mediaPlayer, Button playPauseBtn, ImageView playImg, ImageView pauseImg) {
-        if (running == false) {
+    public void playPauseSong(Button playPauseBtn, ImageView playImg, ImageView pauseImg,
+                              ProgressBar songProgressBar, Label timeStart, Label timeEnd, Slider songSlider) {
+        if (isRunning == false) {
             mediaPlayer.play();
+            mediaPlayer.setVolume(volumeValue);
             playPauseBtn.setGraphic(pauseImg);
-            running = true;
+            trackProgress(playPauseBtn, playImg, pauseImg,songProgressBar, timeStart, timeEnd, songSlider);
+            isRunning = true;
         } else {
             mediaPlayer.pause();
             playPauseBtn.setGraphic(playImg);
-            running = false;
+            timeLine.pause();
+            isRunning = false;
         }
     }
 
-    public void beginTimer(ProgressBar songProgressBar, Media media, MediaPlayer mediaPlayer) {
-
-        timer = new Timer();
-
-        task = new TimerTask() {
-
-            public void run() {
-
-                running = true;
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = media.getDuration().toSeconds();
-                songProgressBar.setProgress(current/end);
-
-                if(current/end == 1) {
-
-                    cancelTimer();
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(task, 0, 1000);
+    public void nextSong(Button playPauseBtn, ImageView playImg, ImageView pauseImg,
+                         ProgressBar songProgressBar, Label timeStart, Label timeEnd, Slider songSlider) {
+        if (songNumber < songs.size() - 1) {
+            songNumber++;
+        }
+        else {
+            songNumber = 0;
+        }
+        mediaPlayer.stop();
+        isRunning = false;
+        if (timeLine != null) {
+            timeLine.stop();
+        }
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        playPauseSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
     }
 
-    public void cancelTimer() {
-        running = false;
-        timer.cancel();
+    public void prevSong(Button playPauseBtn, ImageView playImg, ImageView pauseImg,
+                         ProgressBar songProgressBar, Label timeStart, Label timeEnd, Slider songSlider) {
+        if (songNumber > 0) {
+            songNumber--;
+        }
+        else {
+            songNumber = songs.size() - 1;
+        }
+        mediaPlayer.stop();
+        isRunning = false;
+        if (timeLine != null) {
+            timeLine.stop();
+        }
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        playPauseSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+    }
+
+    public void autoNextSong(Button playPauseBtn, ImageView playImg, ImageView pauseImg, ProgressBar songProgressBar,
+                             Label timeStart, Label timeEnd, double current, double end, Slider songSlider) {
+        if (current == end && isLoop == false) {
+            nextSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+        }
+    }
+
+    public void loopSong(Button playPauseBtn, ImageView playImg, ImageView pauseImg,
+                         ProgressBar songProgressBar, Label timeStart, Label timeEnd, Slider songSlider) {
+        if (isLoop == true) {
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    isRunning = false;
+                    mediaPlayer.seek(Duration.ZERO);
+                    playPauseSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, songSlider);
+                }
+            });
+        }
+    }
+
+    public String formatTime(int n) {
+        int minute, second;
+        minute = n / 60;
+        second = n % 60;
+        if (second < 10) {
+            return minute + ":0" + second;
+        }
+        return minute + ":" + second;
+    }
+
+    public void trackProgress(Button playPauseBtn, ImageView playImg, ImageView pauseImg,
+                              ProgressBar songProgressBar, Label timeStart, Label timeEnd, Slider songSlider) {
+        timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01), e -> {
+            double current = mediaPlayer.getCurrentTime().toSeconds();
+            double end = media.getDuration().toSeconds();
+
+            String currentFormat = formatTime((int)Math.round(current));
+            String endFormat = formatTime((int)Math.round(end));
+
+            timeStart.setText(currentFormat);
+            timeEnd.setText(endFormat);
+
+            songProgressBar.setProgress(current / end);
+            songSlider.setValue(current / end);
+
+            autoNextSong(playPauseBtn, playImg, pauseImg, songProgressBar, timeStart, timeEnd, current, end, songSlider);
+        }));
+        timeLine.setCycleCount(Animation.INDEFINITE);
+        timeLine.play();
     }
 
     public void startPlaylist() {
@@ -441,15 +587,12 @@ public class Controller {
         directory = new File("C:\\Users\\Admin\\IdeaProjects\\music-player-project\\src\\main\\resources\\ptit\\tvnkhanh\\musicplayerproject\\Musics");
         files = directory.listFiles();
         if (files != null) {
-            for (File file : files) {
-                songs.add(file);
-            }
+            songs.addAll(Arrays.asList(files));
         }
         songNumber = 0;
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
     }
-    
 
 //    Center an image in ImageView
     public void centerImage(ImageView imageView) {

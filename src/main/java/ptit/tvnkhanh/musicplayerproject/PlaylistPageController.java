@@ -1,29 +1,13 @@
 package ptit.tvnkhanh.musicplayerproject;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class PlaylistPageController extends Controller implements Initializable {
     @FXML
@@ -39,6 +23,5 @@ public class PlaylistPageController extends Controller implements Initializable 
 
         HBox playerBar = createMusicPlayerBar("Nevada", "tukhanh");
         wrapper.getChildren().add(playerBar);
-
     }
 }

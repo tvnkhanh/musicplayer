@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.CreatePlaylistPageController">
+<AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.LikedSongsPageController">
    <children>
       <Pane fx:id="sideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="214.0">
          <children>
@@ -90,7 +90,7 @@
             </MenuButton>
          </children>
       </Pane>
-      <Label layoutX="467.0" layoutY="104.0" text="CreatePlaylistPage">
+      <Label layoutX="525.0" layoutY="142.0" text="Create Playlist Page">
          <font>
             <Font size="64.0" />
          </font>

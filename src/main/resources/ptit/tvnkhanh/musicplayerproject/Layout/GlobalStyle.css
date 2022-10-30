@@ -64,6 +64,14 @@
 
 .progress-bar {
     -fx-alignment: center;
+    -fx-accent: #1DB954;
+}
+
+.slider-progress-bar .track {
+     -fx-background-color:null;  /* Hide the track */
+     -fx-background-insets: 1 0 -1 0, 0, 1;
+     -fx-background-radius: 2.5, 2.5, 1.5;
+     -fx-padding: 0.208333em; /* 2.5 */
 }
 
 .navbar {
@@ -94,7 +102,6 @@
 }
 
 .context-menu {
-    /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/
     -fx-background-color: -black-color;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
