@@ -1,0 +1,60 @@
+.playlist-page-banner {
+
+}
+
+.lbl-playlist-page {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -white-color;
+}
+
+.lbl-playlist-name {
+    -fx-font-size: 60px;
+    -fx-font-weight: 900;
+    -fx-text-fill: -white-color;
+}
+
+.contentPane {
+    -fx-background-color: #10151B;
+}
+
+.artist-info {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -playlist-text-theme-color;
+}
+
+.playlist-info {
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -white-color;
+}
+
+.playlist-btn-special {
+    -fx-background-color: #10151B;
+}
+
+.playlist-header {
+    -fx-font-size: 12px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -playlist-text-theme-color;
+}
+
+.song-item:hover {
+    -fx-background-color: #343434;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.song-info, .artist-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-line-spacing: 60;
+    -fx-text-fill: -playlist-text-theme-color;
+}
+
+.song-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -white-color;
+}

@@ -1,5 +1,6 @@
 package ptit.tvnkhanh.musicplayerproject;
 
+import java.sql.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,16 +12,16 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Layout/HomePage/HomePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Pages/HomePage/HomePage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("Layout/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("Pages/GlobalStyle.css").toExternalForm());
         stage.setTitle("Spotify");
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream("Images/spotify.png")));
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch();
     }
 }

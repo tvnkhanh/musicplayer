@@ -8,7 +8,12 @@ module ptit.tvnkhanh.musicplayerproject {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires javafx.media;
+    requires java.sql;
 
     opens ptit.tvnkhanh.musicplayerproject to javafx.fxml;
     exports ptit.tvnkhanh.musicplayerproject;
+    exports ptit.tvnkhanh.musicplayerproject.controller;
+    opens ptit.tvnkhanh.musicplayerproject.controller to javafx.fxml;
+    exports ptit.tvnkhanh.musicplayerproject.model;
+    opens ptit.tvnkhanh.musicplayerproject.model to javafx.fxml;
 }
