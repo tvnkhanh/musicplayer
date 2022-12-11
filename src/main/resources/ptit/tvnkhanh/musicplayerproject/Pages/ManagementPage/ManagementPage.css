@@ -1,0 +1,46 @@
+.tab-pane *.tab-header-area *.tab-header-background {
+  -fx-background-color: transparent;
+}
+
+.tab-pane {
+  -fx-tab-min-width:150px;
+  -fx-tab-max-width:150px;
+  -fx-tab-min-height:20px;
+  -fx-tab-max-height:20px;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: -white-color;
+    -fx-font-weight: bold;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: bold;
+}
+
+.tab {
+  -fx-font-size: 12;
+  -fx-text-fill: -white-color;
+  -fx-background-color: #1D1B1B;
+}
+
+.item-label, .item-input {
+    -fx-font-size: 14px;
+}
+
+.item-btn {
+    -fx-font-size: 14px;
+    -fx-pref-width: 200px;
+    -fx-alignment: CENTER;
+}
+
+.management-btn {
+    -fx-background-color: -content-page-color;
+}
+
+.management-btn:hover {
+    -fx-opacity: 0.9;
+}

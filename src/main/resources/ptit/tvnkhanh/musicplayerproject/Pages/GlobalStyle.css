@@ -1,4 +1,5 @@
 * {
+    -primary-color: #1FDF64;
     -button-color: #d1d1d1;
     -black-color: #000;
     -white-color: #fff;
@@ -35,7 +36,7 @@
     -fx-background-color: transparent;
 }
 
-.contentPane {
+.content-pane {
     -fx-background-color: -content-page-color;
 }
 
@@ -80,6 +81,16 @@
 
 .navbar {
     -fx-background-color: -black-color;
+}
+
+.management-btn {
+    -fx-text-fill: -button-color;
+
+}
+
+.management-btn:hover {
+    -fx-text-fill: -white-color;
+
 }
 
 .user-menu {

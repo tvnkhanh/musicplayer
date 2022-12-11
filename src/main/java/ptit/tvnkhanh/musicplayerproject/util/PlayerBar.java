@@ -1,4 +1,4 @@
-package ptit.tvnkhanh.musicplayerproject.model;
+package ptit.tvnkhanh.musicplayerproject.util;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -28,7 +28,6 @@ import ptit.tvnkhanh.musicplayerproject.controller.Controller;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class PlayerBar {
@@ -425,25 +424,23 @@ public class PlayerBar {
     }
 
     public void startPlaylist() throws SQLException {
-        Connection con = DatabaseHelper.openConnection();
-        String sql = "{call SP_CONVERT_BIN_TO_FILE}";
-        CallableStatement callableStatement = con.prepareCall(sql);
-        callableStatement.execute();
         songs = new ArrayList<>();
-        directory = new File("D:\\music-player-project\\src\\main\\resources\\ptit\\tvnkhanh\\musicplayerproject\\Musics");
-        files = directory.listFiles();
-        if (files != null) {
-            songs.addAll(Arrays.asList(files));
+
+        Connection con = DatabaseHelper.openConnection();
+        Statement statement = con.createStatement();
+        String sql = "SELECT FILE_URI FROM TRACK";
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()) {
+            String filePath = rs.getNString("FILE_URI");
+            File fileSong = new File(filePath);
+            songs.add(fileSong);
         }
-//        for (int i = 0; i < songs.size(); i++) {
-//            songs.get(i).deleteOnExit();
-//        }
         backupSongs = songs;
         songNumber = 0;
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
-        callableStatement.close();
+        statement.close();
         con.close();
     }
 }

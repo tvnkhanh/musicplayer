@@ -14,6 +14,6 @@ module ptit.tvnkhanh.musicplayerproject {
     exports ptit.tvnkhanh.musicplayerproject;
     exports ptit.tvnkhanh.musicplayerproject.controller;
     opens ptit.tvnkhanh.musicplayerproject.controller to javafx.fxml;
-    exports ptit.tvnkhanh.musicplayerproject.model;
-    opens ptit.tvnkhanh.musicplayerproject.model to javafx.fxml;
+    exports ptit.tvnkhanh.musicplayerproject.util;
+    opens ptit.tvnkhanh.musicplayerproject.util to javafx.fxml;
 }

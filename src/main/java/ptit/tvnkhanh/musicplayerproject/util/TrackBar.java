@@ -1,4 +1,4 @@
-package ptit.tvnkhanh.musicplayerproject.model;
+package ptit.tvnkhanh.musicplayerproject.util;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,9 +8,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import ptit.tvnkhanh.database.DAO.AlbumDAO;
+import ptit.tvnkhanh.database.DAO.ArtistDAO;
+import ptit.tvnkhanh.database.DAO.TrackDAO;
+import ptit.tvnkhanh.database.helper.DatabaseHelper;
+import ptit.tvnkhanh.database.model.Album;
+import ptit.tvnkhanh.database.model.Artist;
+import ptit.tvnkhanh.database.model.Track;
 import ptit.tvnkhanh.musicplayerproject.Main;
 
-public class Track {
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TrackBar {
     private HBox wrapper = new HBox();
     private Label trackId = new Label();
     private HBox trackInfoContainer = new HBox();
@@ -22,11 +35,11 @@ public class Track {
     private Label albumName = new Label();
     private Label duration = new Label();
 
-    public Track() {
+    public TrackBar() {
     }
 
     //    Create a song item in list of songs
-    public HBox createSong(int id, String songN, String artistN, String imgUrl, String albumN, String time) {
+    public HBox createSong(int id, String songN, String artistN, String imgUrl, String albumN, String time) throws Exception {
         wrapper.setPrefWidth(200);
         wrapper.setPrefHeight(60);
         wrapper.setPadding(new Insets(0, 0, 0, 30));
@@ -77,5 +90,17 @@ public class Track {
         wrapper.setAlignment(Pos.CENTER_LEFT);
 
         return wrapper;
+    }
+
+    public void createSongList() throws Exception {
+        Connection con = DatabaseHelper.openConnection();
+        String sql = "{call SP_CREATE_PLAYLIST_TABLE(?)}";
+        CallableStatement callableStatement = con.prepareCall(sql);
+
+        callableStatement.setInt(1, 1);
+        callableStatement.execute();
+
+        callableStatement.close();
+        con.close();
     }
 }

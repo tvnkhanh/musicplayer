@@ -88,6 +88,7 @@
                   </ImageView>
                </graphic>
             </MenuButton>
+            <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
          </children>
       </Pane>
       <Label layoutX="525.0" layoutY="142.0" text="Create Playlist Page">

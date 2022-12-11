@@ -68,6 +68,11 @@
             </Button>
          </children>
       </Pane>
+      <Label layoutX="525.0" layoutY="142.0" text="Liked Songs">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
             <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
@@ -88,12 +93,8 @@
                   </ImageView>
                </graphic>
             </MenuButton>
+            <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
          </children>
       </Pane>
-      <Label layoutX="525.0" layoutY="142.0" text="Liked Songs">
-         <font>
-            <Font size="64.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

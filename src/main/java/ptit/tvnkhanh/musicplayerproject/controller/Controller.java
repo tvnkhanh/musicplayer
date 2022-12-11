@@ -2,7 +2,6 @@ package ptit.tvnkhanh.musicplayerproject.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,6 +47,7 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/HomePage/HomePage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -57,6 +57,7 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/SearchPage/SearchPage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -66,6 +67,7 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LibraryPage/LibraryPage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -75,6 +77,7 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/CreatePlaylistPage/CreatePlaylistPage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -84,6 +87,17 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LikedSongsPage/LikedSongsPage.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToManagementPage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/ManagementPage/ManagementPage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/ManagementPage/ManagementPage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -185,7 +199,6 @@ public class Controller {
 
             imageView.setX((imageView.getFitWidth() - w) / 2);
             imageView.setY((imageView.getFitHeight() - h) / 2);
-
         }
     }
 }

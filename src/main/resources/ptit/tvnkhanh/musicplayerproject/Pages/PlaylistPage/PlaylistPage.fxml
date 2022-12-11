@@ -72,33 +72,11 @@
             </Button>
          </children>
       </Pane>
-      <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
-         <children>
-            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Account" />
-                  <MenuItem mnemonicParsing="false" text="Profile" />
-                  <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
-                  <MenuItem mnemonicParsing="false" text="Support" />
-                  <MenuItem mnemonicParsing="false" text="Download" />
-                  <MenuItem mnemonicParsing="false" text="Setting" />
-                  <MenuItem mnemonicParsing="false" text="Log out" />
-               </items>
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../1234381.jpg" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </MenuButton>
-         </children>
-      </Pane>
       <ScrollPane layoutX="202.0" layoutY="50.0" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
          <content>
-            <AnchorPane prefHeight="655.0" prefWidth="1291.0" styleClass="contentPane">
+            <AnchorPane prefHeight="655.0" prefWidth="1291.0" styleClass="content-pane">
                <children>
-                  <VBox fx:id="contentPlaylistContainer" layoutX="55.0" prefHeight="674.0" prefWidth="1179.0">
+                  <VBox fx:id="contentPlaylistContainer" layoutX="56.0" prefHeight="674.0" prefWidth="1179.0">
                      <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="playlist-page-banner">
                            <children>
@@ -177,5 +155,28 @@
                </children></AnchorPane>
          </content>
       </ScrollPane>
+      <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
+         <children>
+            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Account" />
+                  <MenuItem mnemonicParsing="false" text="Profile" />
+                  <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
+                  <MenuItem mnemonicParsing="false" text="Support" />
+                  <MenuItem mnemonicParsing="false" text="Download" />
+                  <MenuItem mnemonicParsing="false" text="Setting" />
+                  <MenuItem mnemonicParsing="false" text="Log out" />
+               </items>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../1234381.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+            <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

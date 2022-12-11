@@ -14,27 +14,6 @@
 
 <AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.controller.HomePageController">
    <children>
-      <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
-         <children>
-            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Account" />
-                <MenuItem mnemonicParsing="false" text="Profile" />
-                  <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
-                  <MenuItem mnemonicParsing="false" text="Support" />
-                  <MenuItem mnemonicParsing="false" text="Download" />
-                  <MenuItem mnemonicParsing="false" text="Setting" />
-                  <MenuItem mnemonicParsing="false" text="Log out" />
-              </items>
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../1234381.jpg" />
-                     </image></ImageView>
-               </graphic>
-            </MenuButton>
-         </children>
-      </Pane>
       <Pane fx:id="sideBar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="214.0">
          <children>
             <ImageView fitHeight="44.0" fitWidth="166.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -86,7 +65,7 @@
          </children></Pane>
       <ScrollPane layoutX="200.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
         <content>
-          <AnchorPane minWidth="0.0" prefHeight="802.0" prefWidth="1290.0" styleClass="contentPane">
+          <AnchorPane minWidth="0.0" prefHeight="802.0" prefWidth="1290.0" styleClass="content-pane">
                <children>
                   <VBox fx:id="contentHomePage" layoutX="-2.0" layoutY="-1.0">
                      <children>
@@ -104,8 +83,32 @@
                         </Pane>
                      </children>
                   </VBox>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
         </content>
       </ScrollPane>
+      <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
+         <children>
+            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Account" />
+                  <MenuItem mnemonicParsing="false" text="Profile" />
+                  <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
+                  <MenuItem mnemonicParsing="false" text="Support" />
+                  <MenuItem mnemonicParsing="false" text="Download" />
+                  <MenuItem mnemonicParsing="false" text="Setting" />
+                  <MenuItem mnemonicParsing="false" text="Log out" />
+               </items>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../1234381.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+            <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
