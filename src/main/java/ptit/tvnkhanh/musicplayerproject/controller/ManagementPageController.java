@@ -13,7 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import ptit.tvnkhanh.database.DAO.*;
 import ptit.tvnkhanh.database.model.*;
-import ptit.tvnkhanh.musicplayerproject.util.PlayerBar;
+import ptit.tvnkhanh.musicplayerproject.view.PlayerBar;
 
 import java.io.File;
 import java.net.URL;

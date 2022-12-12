@@ -5,11 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ptit.tvnkhanh.musicplayerproject.util.PlayerBar;
-import ptit.tvnkhanh.musicplayerproject.util.TrackBar;
+import ptit.tvnkhanh.musicplayerproject.view.PlayerBar;
+import ptit.tvnkhanh.musicplayerproject.view.TrackBar;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class PlaylistPageController extends Controller implements Initializable {

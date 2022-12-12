@@ -1,0 +1,64 @@
+.pane-background {
+    -fx-background-image: url("login-signup-background.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1510px, 750px;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+.login-pane {
+    -fx-background-color: -black-color;
+    -fx-background-radius: 10px;
+}
+
+.login-btn {
+    -fx-alignment: center;
+    -fx-background-radius: 10px;
+    -fx-background-color: -white-color;
+    -fx-text-fill: -black-color;
+}
+
+.login-btn:hover {
+    -fx-text-fill: -black-color;
+}
+
+.signup-btn {
+    -fx-alignment: center;
+    -fx-background-radius: 10px;
+    -fx-background-color: -primary-color;
+    -fx-text-fill: -black-color;
+}
+
+.signup-btn:hover {
+    -fx-text-fill: -black-color;
+}
+
+.inputTextField {
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: 0;
+    -fx-padding: 1 3 1 3;
+    -fx-control-inner-background: #333;
+    -fx-prompt-text-fill: #989898;
+    -fx-font-size: 14px;
+    -fx-text-box-border: transparent;
+}
+
+.inputTextField:focused {
+    -fx-focus-color: transparent;
+}
+
+.switch-page-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: -white-color;
+}
+
+.des-text {
+    -fx-text-fill: -button-color;
+}
+
+.invalid-label {
+    -fx-alignment: center;
+    -fx-text-fill: #d91111;
+    -fx-font-size: 14px;
+
+}

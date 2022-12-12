@@ -9,11 +9,12 @@ module ptit.tvnkhanh.musicplayerproject {
     requires org.kordamp.bootstrapfx.core;
     requires javafx.media;
     requires java.sql;
+    requires org.jetbrains.annotations;
 
     opens ptit.tvnkhanh.musicplayerproject to javafx.fxml;
     exports ptit.tvnkhanh.musicplayerproject;
     exports ptit.tvnkhanh.musicplayerproject.controller;
     opens ptit.tvnkhanh.musicplayerproject.controller to javafx.fxml;
-    exports ptit.tvnkhanh.musicplayerproject.util;
-    opens ptit.tvnkhanh.musicplayerproject.util to javafx.fxml;
+    exports ptit.tvnkhanh.musicplayerproject.view;
+    opens ptit.tvnkhanh.musicplayerproject.view to javafx.fxml;
 }

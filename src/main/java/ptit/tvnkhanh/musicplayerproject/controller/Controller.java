@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import ptit.tvnkhanh.musicplayerproject.Main;
 
 import java.io.IOException;
@@ -108,6 +109,36 @@ public class Controller {
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
         scene.getStylesheets().add(Main.class.getResource("Pages/PlaylistPage/PlaylistPage.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLogInPageFromMenuBar(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/LogInPage.fxml"));
+        stage = (Stage)((MenuItem)e.getTarget()).getParentPopup().getOwnerWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LogInSignUpPage/LogInSignUp.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLogInPage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/LogInPage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LogInSignUpPage/LogInSignUp.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToSignOutPage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/SignUpPage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LogInSignUpPage/LogInSignUp.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

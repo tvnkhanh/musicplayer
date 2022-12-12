@@ -79,7 +79,7 @@
                   <MenuItem mnemonicParsing="false" text="Support" />
                   <MenuItem mnemonicParsing="false" text="Download" />
                   <MenuItem mnemonicParsing="false" text="Setting" />
-                  <MenuItem mnemonicParsing="false" text="Log out" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
