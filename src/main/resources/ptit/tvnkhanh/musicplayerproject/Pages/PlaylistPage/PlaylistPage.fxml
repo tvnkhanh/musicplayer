@@ -80,22 +80,18 @@
                      <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="playlist-page-banner">
                            <children>
-                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgPlaylist" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../395eb4a5e6aa04c8574425345cd816f5.894x894x1.png" />
                                  </image>
                               </ImageView>
                               <Label layoutX="225.0" layoutY="44.0" styleClass="lbl-playlist-page" text="Playlist" />
-                              <Label layoutX="227.0" layoutY="166.0" styleClass="playlist-info" text="Label">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label layoutX="227.0" layoutY="53.0" prefHeight="88.0" prefWidth="928.0" styleClass="lbl-playlist-name" text="Label">
+                              <Label fx:id="playlistTitle" layoutX="227.0" layoutY="53.0" prefHeight="88.0" prefWidth="928.0" styleClass="lbl-playlist-name">
                                  <font>
                                     <Font size="60.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="228.0" layoutY="129.0" styleClass="artist-info" text="Label">
+                              <Label fx:id="playlistArtist" layoutX="224.0" layoutY="147.0" styleClass="artist-info">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -110,7 +106,7 @@
                               <Insets bottom="30.0" left="30.0" />
                            </VBox.margin>
                            <children>
-                              <Button fx:id="playBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="playlist-btn-special">
+                              <Button fx:id="playPlaylistBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="playlist-btn-special">
                                  <graphic>
                                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -157,7 +153,7 @@
       </ScrollPane>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
-            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
+            <MenuButton fx:id="userManagement" layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu">
                <items>
                   <MenuItem mnemonicParsing="false" text="Account" />
                   <MenuItem mnemonicParsing="false" text="Profile" />
@@ -168,11 +164,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../1234381.jpg" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="userAvatar" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
             <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />

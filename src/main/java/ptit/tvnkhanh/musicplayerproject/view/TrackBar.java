@@ -50,7 +50,7 @@ public class TrackBar {
         HBox.setMargin(imageContainer, new Insets(0, 14, 0, 0));
         trackImg.setFitWidth(44);
         trackImg.setFitHeight(44);
-        trackImg.setImage(new Image(Main.class.getResourceAsStream(imgUrl)));
+        trackImg.setImage(new Image(imgUrl));
         imageContainer.getChildren().add(trackImg);
 
         trackInfo.setPrefHeight(60);
@@ -81,17 +81,5 @@ public class TrackBar {
         wrapper.setAlignment(Pos.CENTER_LEFT);
 
         return wrapper;
-    }
-
-    public void createSongList() throws Exception {
-        Connection con = DatabaseHelper.openConnection();
-        String sql = "{call SP_CREATE_PLAYLIST_TABLE(?)}";
-        CallableStatement callableStatement = con.prepareCall(sql);
-
-        callableStatement.setInt(1, 1);
-        callableStatement.execute();
-
-        callableStatement.close();
-        con.close();
     }
 }

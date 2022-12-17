@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -64,11 +65,21 @@ public class ManagementPageController extends Controller implements Initializabl
     @FXML
     private TextField genreIdDetails;
     @FXML
+    private TextField albumIdTxt;
+    @FXML
     private TableView<Artist> artistTable = new TableView<Artist>();
     @FXML
     private TableView<Album> albumTable = new TableView<Album>();
     @FXML
     private TableView<Genre> genreTable = new TableView<>();
+    @FXML
+    private MenuButton userManagement;
+    @FXML
+    private Button managementBtn;
+    @FXML
+    private ImageView userAvatar;
+    @FXML
+    private TableView<ArtistDetails> artistDetailsTable = new TableView<>();
     @FXML
     private TableView<AlbumDetails> albumDetailsTable = new TableView<>();
     @FXML
@@ -76,6 +87,8 @@ public class ManagementPageController extends Controller implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkUser(userManagement, managementBtn, userAvatar);
+
         releaseDateBtn.setConverter(converter);
         releaseDateBtn.setPromptText(pattern.toLowerCase());
         isSingle.getItems().addAll("true", "false");
@@ -84,6 +97,7 @@ public class ManagementPageController extends Controller implements Initializabl
         try {
             createArtistTable();
             createAlbumTable();
+            createArtistDetailsTable();
             createGenreTable();
             createAlbumDetailsTable();
             createTrackTable();
@@ -114,7 +128,17 @@ public class ManagementPageController extends Controller implements Initializabl
                 isSingle.setValue(selectedAlbumItems.get(0).getSingle());
                 imgLinkChooser.setText(selectedAlbumItems.get(0).getImgURI());
                 releaseDateBtn.setValue(selectedAlbumItems.get(0).getReleaseDate().toLocalDate());
-                artistIdText.setText((String.valueOf(selectedAlbumItems.get(0).getArtistId())));
+            }
+        });
+
+        // Listen change select event in artist details table
+        TableView.TableViewSelectionModel<ArtistDetails> selectionArtistDetailsModel = artistDetailsTable.getSelectionModel();
+        ObservableList<ArtistDetails> selectedArtistDetailsItems = selectionArtistDetailsModel.getSelectedItems();
+        selectedArtistDetailsItems.addListener(new ListChangeListener<ArtistDetails>() {
+            @Override
+            public void onChanged(Change<? extends ArtistDetails> change) {
+                artistIdText.setText(String.valueOf(selectedArtistDetailsItems.get(0).getArtistId()));
+                albumIdTxt.setText(String.valueOf(selectedArtistDetailsItems.get(0).getAlbumId()));
             }
         });
 
@@ -153,7 +177,7 @@ public class ManagementPageController extends Controller implements Initializabl
             }
         });
 
-        HBox renderPlayerBar = playerBar.createMusicPlayerBar("Nevada", "tukhanh");
+        HBox renderPlayerBar = playerBar.createMusicPlayerBar();
         wrapper.getChildren().add(renderPlayerBar);
     }
 
@@ -230,14 +254,12 @@ public class ManagementPageController extends Controller implements Initializabl
         TableColumn<Album, String> imgURICol = new TableColumn<Album, String>("Image Link");
         TableColumn<Album, Date> dateCol = new TableColumn<Album, Date>("Release Date");
         TableColumn<Album, String> singleCol = new TableColumn<Album, String>("Single");
-        TableColumn<Album, Integer> artistIdCol = new TableColumn<Album, Integer>("Artist Id");
 
         albumIdCol.setCellValueFactory(data -> data.getValue().albumIdProperty().asObject());
         albumNameCol.setCellValueFactory(data -> data.getValue().nameProperty());
         imgURICol.setCellValueFactory(data -> data.getValue().imgURIProperty());
         dateCol.setCellValueFactory(data -> data.getValue().releaseDateProperty());
         singleCol.setCellValueFactory(data -> data.getValue().singleProperty());
-        artistIdCol.setCellValueFactory(data -> data.getValue().artistIdProperty().asObject());
 
 
         albumIdCol.setSortType(TableColumn.SortType.ASCENDING);
@@ -245,12 +267,34 @@ public class ManagementPageController extends Controller implements Initializabl
         ObservableList<Album> list = getAlbumList();
         albumTable.setItems(list);
 
-        albumTable.getColumns().addAll(albumIdCol, albumNameCol, imgURICol, dateCol, singleCol, artistIdCol);
+        albumTable.getColumns().addAll(albumIdCol, albumNameCol, imgURICol, dateCol, singleCol);
     }
 
     private ObservableList<Album> getAlbumList() throws Exception {
         AlbumDAO albumDAO = new AlbumDAO();
         ObservableList<Album> list = FXCollections.observableArrayList(albumDAO.getAllAlbum());
+        return list;
+    }
+
+    // Create table for artist details table
+    public void createArtistDetailsTable() throws Exception {
+        TableColumn<ArtistDetails, Integer> artistIdCol = new TableColumn<ArtistDetails, Integer>("Artist Id");
+        TableColumn<ArtistDetails, String> albumIdCol = new TableColumn<ArtistDetails, String>("Album Id");
+
+        artistIdCol.setCellValueFactory(data -> data.getValue().artistIdProperty().asObject());
+        albumIdCol.setCellValueFactory(data -> data.getValue().albumIdProperty().asString());
+
+        artistIdCol.setSortType(TableColumn.SortType.ASCENDING);
+
+        ObservableList<ArtistDetails> list = getArtistDetailsList();
+        artistDetailsTable.setItems(list);
+
+        artistDetailsTable.getColumns().addAll(artistIdCol, albumIdCol);
+    }
+
+    private ObservableList<ArtistDetails> getArtistDetailsList() throws Exception {
+        ArtistDetailsDAO artistDetailsDAO = new ArtistDetailsDAO();
+        ObservableList<ArtistDetails> list = FXCollections.observableArrayList(artistDetailsDAO.getAllArtistDetails());
         return list;
     }
 
@@ -454,7 +498,7 @@ public class ManagementPageController extends Controller implements Initializabl
         }
 
         Album album = new Album(Integer.parseInt(albumIdPK.getText()), albumName.getText(), imgLinkChooser.getText(), releaseDate,
-                isSingle.getValue().toString(), Integer.parseInt(artistIdText.getText()));
+                isSingle.getValue().toString());
         return album;
     }
 
@@ -464,7 +508,6 @@ public class ManagementPageController extends Controller implements Initializabl
         imgLinkChooser.setText("Select a image");
         releaseDateBtn.setValue(null);
         isSingle.getSelectionModel().selectLast();
-        artistIdText.setText("");
     }
 
     public void renderSearchAlbumResult(Album album) {
@@ -476,14 +519,12 @@ public class ManagementPageController extends Controller implements Initializabl
         TableColumn<Album, String> imgURICol = new TableColumn<Album, String>("Image Link");
         TableColumn<Album, Date> dateCol = new TableColumn<Album, Date>("Release Date");
         TableColumn<Album, String> singleCol = new TableColumn<Album, String>("Single");
-        TableColumn<Album, Integer> artistIdCol = new TableColumn<Album, Integer>("Artist Id");
 
         albumIdCol.setCellValueFactory(data -> data.getValue().albumIdProperty().asObject());
         albumNameCol.setCellValueFactory(data -> data.getValue().nameProperty());
         imgURICol.setCellValueFactory(data -> data.getValue().imgURIProperty());
         dateCol.setCellValueFactory(data -> data.getValue().releaseDateProperty());
         singleCol.setCellValueFactory(data -> data.getValue().singleProperty());
-        artistIdCol.setCellValueFactory(data -> data.getValue().artistIdProperty().asObject());
 
 
         albumIdCol.setSortType(TableColumn.SortType.ASCENDING);
@@ -491,7 +532,7 @@ public class ManagementPageController extends Controller implements Initializabl
         ObservableList<Album> list = FXCollections.observableArrayList(lst);
         albumTable.setItems(list);
 
-        albumTable.getColumns().addAll(albumIdCol, albumNameCol, imgURICol, dateCol, singleCol, artistIdCol);
+        albumTable.getColumns().addAll(albumIdCol, albumNameCol, imgURICol, dateCol, singleCol);
     }
 
     public void addAlbum() throws Exception {
@@ -555,6 +596,93 @@ public class ManagementPageController extends Controller implements Initializabl
                 albumTable.getColumns().clear();
                 createAlbumTable();
             }
+        }
+    }
+
+    // Handle event for artist details table
+    public ArtistDetails createArtistDetailsObject() {
+        ArtistDetails artistDetails = new ArtistDetails(Integer.parseInt(artistIdText.getText()), Integer.parseInt(albumIdTxt.getText()));
+        return artistDetails;
+    }
+
+    public void resetArtistDetailsTextFields() {
+        artistIdText.setText("");
+        albumIdTxt.setText("");
+    }
+
+    public void renderSearchArtistDetailsResult(ArtistDetails artistDetails) {
+        List<ArtistDetails> lst = new ArrayList<>();
+        lst.add(artistDetails);
+        TableColumn<ArtistDetails, Integer> artistIdCol = new TableColumn<ArtistDetails, Integer>("Artist Id");
+        TableColumn<ArtistDetails, String> albumIdCol = new TableColumn<ArtistDetails, String>("Album Id");
+
+        artistIdCol.setCellValueFactory(data -> data.getValue().artistIdProperty().asObject());
+        albumIdCol.setCellValueFactory(data -> data.getValue().albumIdProperty().asString());
+
+        artistIdCol.setSortType(TableColumn.SortType.ASCENDING);
+
+        ObservableList<ArtistDetails> list = FXCollections.observableArrayList(lst);
+        artistDetailsTable.setItems(list);
+
+        artistDetailsTable.getColumns().addAll(artistIdCol, albumIdCol);
+    }
+
+    public void addArtistDetails() throws Exception {
+        ArtistDetailsDAO artistDetailsDAO = new ArtistDetailsDAO();
+        ArtistDetails artistDetails = createArtistDetailsObject();
+        Optional<ButtonType> result = confirmationAlert("add", "artist details");
+        if (result.get() == ButtonType.OK) {
+            artistDetailsDAO.insertArtistDetails(artistDetails);
+
+            artistDetailsTable.getColumns().clear();
+            createArtistDetailsTable();
+            resetArtistDetailsTextFields();
+        }
+    }
+
+    public void removeArtistDetails() throws Exception {
+        Optional<ButtonType> result = confirmationAlert("remove", "artist details");
+        if (result.get() == ButtonType.OK) {
+            ArtistDetails artistDetails = createArtistDetailsObject();
+            ArtistDetailsDAO artistDetailsDAO = new ArtistDetailsDAO();
+            artistDetailsDAO.deleteArtistDetails(artistDetails.getArtistId(), artistDetails.getAlbumId());
+
+            artistDetailsTable.getColumns().clear();
+            createArtistDetailsTable();
+            resetArtistDetailsTextFields();
+        }
+    }
+
+    public void editArtistDetails() throws Exception {
+        Optional<ButtonType> result = confirmationAlert("edit", "artist details");
+        if (result.get() == ButtonType.OK) {
+            ArtistDetails artistDetails = createArtistDetailsObject();
+            ArtistDetailsDAO artistDetailsDAO = new ArtistDetailsDAO();
+            artistDetailsDAO.updateArtistDetails(artistDetails);
+
+            artistDetailsTable.getColumns().clear();
+            createArtistDetailsTable();
+            resetArtistDetailsTextFields();
+        }
+    }
+
+    public void searchArtistDetails() throws Exception {
+        ArtistDetailsDAO artistDetailsDAO = new ArtistDetailsDAO();
+        if (artistIdText.getText() != "" && albumIdTxt.getText() != "") {
+            ArtistDetails artistDetails = artistDetailsDAO.findArtistDetails(Integer.parseInt(artistIdText.getText()),
+                    Integer.parseInt(albumIdTxt.getText()));
+            if (artistDetails != null) {
+                artistDetailsTable.getColumns().clear();
+                renderSearchArtistDetailsResult(artistDetails);
+            } else {
+                errorArtistAlert();
+                artistDetailsTable.getColumns().clear();
+                createArtistDetailsTable();
+            }
+        } else {
+            errorArtistAlert();
+            artistDetailsTable.getColumns().clear();
+            createArtistDetailsTable();
         }
     }
 
@@ -719,7 +847,7 @@ public class ManagementPageController extends Controller implements Initializabl
 
     public void searchAlbumDetails() throws Exception {
         AlbumDetailsDAO albumDetailsDAO = new AlbumDetailsDAO();
-        if (albumIdDetails.getText() != "") {
+        if (albumIdDetails.getText() != "" && genreIdDetails.getText() != "") {
             AlbumDetails albumDetails = albumDetailsDAO.findAlbumDetails(Integer.parseInt(albumIdDetails.getText()),
                     Integer.parseInt(genreIdDetails.getText()));
             if (albumDetails != null) {
@@ -730,18 +858,8 @@ public class ManagementPageController extends Controller implements Initializabl
                 albumDetailsTable.getColumns().clear();
                 createAlbumDetailsTable();
             }
-        } else if (genreIdDetails.getText() != "") {
-            AlbumDetails albumDetails = albumDetailsDAO.findAlbumDetails(Integer.parseInt(albumIdDetails.getText()),
-                    Integer.parseInt(genreIdDetails.getText()));
-            if (albumDetails != null) {
-                albumDetailsTable.getColumns().clear();
-                renderSearchAlbumDetailsResult(albumDetails);
-            } else {
-                errorArtistAlert();
-                albumDetailsTable.getColumns().clear();
-                createAlbumDetailsTable();
-            }
-        } else {
+        }
+        else {
             errorArtistAlert();
             albumDetailsTable.getColumns().clear();
             createAlbumDetailsTable();

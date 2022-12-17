@@ -21,7 +21,7 @@ public class AlbumDAO {
 
             while (rs.next()) {
                 Album album = new Album(rs.getInt("ALBUM_ID"), rs.getNString("NAME"), rs.getString("IMG_URI"), rs.getDate("RELEASE_DATE"),
-                        rs.getString("SINGLE"), rs.getInt("ARTIST_ID"));
+                        rs.getString("SINGLE"));
                 lstAlbum.add(album);
             }
             return lstAlbum;
@@ -29,7 +29,7 @@ public class AlbumDAO {
     }
 
     public boolean insertAlbum(Album album) throws Exception {
-        String sql = "insert into Album(ALBUM_ID, NAME, IMG_URI, RELEASE_DATE,SINGLE, ARTIST_ID) values (?,?,?,?,?,?)";
+        String sql = "insert into Album(ALBUM_ID, NAME, IMG_URI, RELEASE_DATE,SINGLE) values (?,?,?,?,?)";
         try (
                 Connection con = DatabaseHelper.openConnection();
                 PreparedStatement pstm = con.prepareStatement(sql);)
@@ -39,7 +39,6 @@ public class AlbumDAO {
             pstm.setString(3, album.getImgURI());
             pstm.setDate(4, album.getReleaseDate());
             pstm.setString(5, album.getSingle());
-            pstm.setInt(6, album.getArtistId());
 
             return pstm.executeUpdate() > 0;
         }
@@ -47,7 +46,7 @@ public class AlbumDAO {
     }
 
     public boolean updateAlbum(Album album) throws Exception {
-        String sql = "Update Album set NAME=?, IMG_URI=?, RELEASE_DATE=?,SINGLE=?, ARTIST_ID=? where ALBUM_ID = ?";
+        String sql = "Update Album set NAME=?, IMG_URI=?, RELEASE_DATE=?,SINGLE=? where ALBUM_ID = ?";
         try (
                 Connection con = DatabaseHelper.openConnection();
                 PreparedStatement pstm = con.prepareStatement(sql);)
@@ -56,8 +55,7 @@ public class AlbumDAO {
             pstm.setString(2, album.getImgURI());
             pstm.setDate(3, album.getReleaseDate());
             pstm.setString(4, album.getSingle());
-            pstm.setInt(5, album.getArtistId());
-            pstm.setInt(6, album.getAlbumId());
+            pstm.setInt(5, album.getAlbumId());
 
             return pstm.executeUpdate() > 0;
         }
@@ -74,7 +72,7 @@ public class AlbumDAO {
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 Album album = new Album(rs.getInt("ALBUM_ID"), rs.getNString("NAME"), rs.getString("IMG_URI"),
-                        rs.getDate("RELEASE_DATE"), rs.getString("SINGLE"), rs.getInt("ARTIST_ID"));
+                        rs.getDate("RELEASE_DATE"), rs.getString("SINGLE"));
 
                 return album;
             }
@@ -93,7 +91,7 @@ public class AlbumDAO {
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 Album album = new Album(rs.getInt("ALBUM_ID"), rs.getNString("NAME"), rs.getString("IMG_URI"),
-                        rs.getDate("RELEASE_DATE"), rs.getString("SINGLE"), rs.getInt("ARTIST_ID"));
+                        rs.getDate("RELEASE_DATE"), rs.getString("SINGLE"));
 
                 return album;
             }

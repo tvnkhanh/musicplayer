@@ -2,7 +2,6 @@ package ptit.tvnkhanh.database.DAO;
 
 import ptit.tvnkhanh.database.helper.DatabaseHelper;
 import ptit.tvnkhanh.database.model.User;
-import ptit.tvnkhanh.database.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;

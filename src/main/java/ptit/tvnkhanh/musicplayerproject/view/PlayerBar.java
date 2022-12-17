@@ -59,7 +59,7 @@ public class PlayerBar {
     private HBox songInfoContainer = new HBox();
 
     private StackPane songImgContainer = new StackPane();
-    private ImageView songImg = new ImageView(new Image(Main.class.getResourceAsStream("395eb4a5e6aa04c8574425345cd816f5.894x894x1.png")));
+    private ImageView songImg = new ImageView();
 
     private VBox songInfo = new VBox();
     private Label songName = new Label();
@@ -96,6 +96,18 @@ public class PlayerBar {
     private ImageView muteImg = new ImageView(new Image(Main.class.getResourceAsStream("Images/icons8-mute-28.png")));
     private Slider volumeSlider = new Slider();
 
+    private static String nameOfSong;
+    private static String nameOfArtist;
+    private static String imgURl;
+
+    public void setImgURl(String imgURl) {
+        this.imgURl = imgURl;
+    }
+
+    public void setSongImg(ImageView songImg) {
+        this.songImg = songImg;
+    }
+
     // ====================================
     private double btnSize = 28;
     private double imgBtnSize = 20;
@@ -104,11 +116,43 @@ public class PlayerBar {
     private double progressBarHeightSize = 10;
     private double progressBarWidthSize = prefWidthPlayerControllerContainer - 40 * 2;
 
+    public Button getPlayPauseBtn() {
+        return playPauseBtn;
+    }
+
+    public ImageView getPlayImg() {
+        return playImg;
+    }
+
+    public ImageView getPauseImg() {
+        return pauseImg;
+    }
+
+    public void setNameOfSong(String nameOfSong) {
+        this.nameOfSong = nameOfSong;
+    }
+
+    public void setNameOfArtist(String nameOfArtist) {
+        this.nameOfArtist = nameOfArtist;
+    }
+
+    public ImageView getSongImg() {
+        return songImg;
+    }
+
+    public Label getSongName() {
+        return songName;
+    }
+
+    public Label getArtistName() {
+        return artistName;
+    }
+
     public PlayerBar() {
     }
 
     //    Handle play, pause, shuffle, loop, change volume and progress music
-    public HBox createMusicPlayerBar(String nameOfSong, String nameOfArtist) {
+    public HBox createMusicPlayerBar() {
         // Render UI
         wrapper.setPrefWidth(controller.getPrefWidthApp());
         wrapper.setPrefHeight(controller.getPrefHeightPlayer());
@@ -122,14 +166,17 @@ public class PlayerBar {
         songImgContainer.setPrefHeight(controller.getPrefHeightPlayer());
         songImgContainer.setPadding(new Insets(23));
         HBox.setMargin(songImgContainer, new Insets(0, 14, 0, 14));
+        if (imgURl != null) {
+            songImg.setImage(new Image(imgURl));
+            songName.setText(nameOfSong);
+            artistName.setText(nameOfArtist);
+        }
         songImg.setFitWidth(56);
         songImg.setFitHeight(56);
         songImgContainer.getChildren().add(songImg);
         songImgContainer.setAlignment(Pos.BASELINE_LEFT);
-        songName.setText(nameOfSong);
-        songName.setPadding(new Insets(24, 0,0,0));
-        artistName.setText(nameOfArtist);
-        artistName.setPadding(new Insets(0,0,40,0));
+        songName.setPadding(new Insets(24, 0, 0, 0));
+        artistName.setPadding(new Insets(0, 0, 40, 0));
         songName.getStyleClass().add("song-name-corner");
         artistName.getStyleClass().add("artist-name-corner");
         songInfo.getChildren().addAll(songName, artistName);
@@ -215,7 +262,11 @@ public class PlayerBar {
 
         volumeSettingContainer.setPrefWidth(prefWidthSongVolume);
         volumeSettingContainer.setPrefHeight(controller.getPrefHeightPlayer());
-        volumeBtn.setGraphic(volumeImg);
+        if (isMute == true) {
+            volumeBtn.setGraphic(muteImg);
+        } else {
+            volumeBtn.setGraphic(volumeImg);
+        }
         volumeBtn.setPrefWidth(btnSize);
         volumeBtn.setPrefHeight(btnSize);
         volumeImg.setFitWidth(imgBtnSize);
@@ -398,49 +449,36 @@ public class PlayerBar {
         minute = n / 60;
         second = n % 60;
         if (second < 10) {
-            return minute + ":0" + second;
+            return String.valueOf(minute) + ":0" + String.valueOf(second);
         }
-        return minute + ":" + second;
+        return  String.valueOf(minute) + ":" + String.valueOf(second);
     }
 
     public void trackProgress() {
         timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01), e -> {
-            double current = mediaPlayer.getCurrentTime().toSeconds();
-            double end = media.getDuration().toSeconds();
+            if (mediaPlayer != null) {
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
 
-            String currentFormat = formatTime((int)Math.round(current));
-            String endFormat = formatTime((int)Math.round(end));
+                String currentFormat = formatTime((int) Math.round(current));
+                String endFormat = formatTime((int) Math.round(end));
 
-            timeStart.setText(currentFormat);
-            timeEnd.setText(endFormat);
+                timeStart.setText(currentFormat);
+                timeEnd.setText(endFormat);
 
-            songProgressBar.setProgress(current / end);
-            songSlider.setValue(current / end);
+                songProgressBar.setProgress(current / end);
+                songSlider.setValue(current / end);
 
-            autoNextSong();
+                autoNextSong();
+            }
         }));
         timeLine.setCycleCount(Animation.INDEFINITE);
         timeLine.play();
     }
 
-    public void startPlaylist() throws SQLException {
-        songs = new ArrayList<>();
-
-        Connection con = DatabaseHelper.openConnection();
-        Statement statement = con.createStatement();
-        String sql = "SELECT FILE_URI FROM TRACK";
-        ResultSet rs = statement.executeQuery(sql);
-        while (rs.next()) {
-            String filePath = rs.getNString("FILE_URI");
-            File fileSong = new File(filePath);
-            songs.add(fileSong);
-        }
+    public void startPlaylist(int num) {
         backupSongs = songs;
-        songNumber = 0;
-        media = new Media(songs.get(songNumber).toURI().toString());
+        media = new Media(songs.get(num).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
-
-        statement.close();
-        con.close();
     }
 }

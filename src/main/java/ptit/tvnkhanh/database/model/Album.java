@@ -10,18 +10,16 @@ public class Album {
     private StringProperty imgURI;
     private ObjectProperty<Date> releaseDate;
     private StringProperty single;
-    private IntegerProperty artistId;
 
     public Album() {
     }
 
-    public Album(int albumId,String name, String imgURI, Date releaseDate,String single, int artistId) {
+    public Album(int albumId,String name, String imgURI, Date releaseDate,String single) {
         this.albumId = new SimpleIntegerProperty(albumId);
         this.name = new SimpleStringProperty(name);
         this.imgURI = new SimpleStringProperty(imgURI);
         this.releaseDate = new SimpleObjectProperty<>(releaseDate);
         this.single = new SimpleStringProperty(single);
-        this.artistId = new SimpleIntegerProperty(artistId);
     }
 
     public int getAlbumId() {
@@ -64,14 +62,6 @@ public class Album {
         this.single.set(single);
     }
 
-    public int getArtistId() {
-        return this.artistId.get();
-    }
-
-    public void setArtistId(int artistId) {
-        this.artistId.set(artistId);
-    }
-
     public IntegerProperty albumIdProperty() {
         return albumId;
     }
@@ -86,10 +76,6 @@ public class Album {
 
     public StringProperty singleProperty() {
         return single;
-    }
-
-    public IntegerProperty artistIdProperty() {
-        return artistId;
     }
 
     public ObjectProperty<Date> releaseDateProperty() {

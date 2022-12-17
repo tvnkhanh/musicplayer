@@ -65,7 +65,7 @@
          </children></Pane>
       <ScrollPane layoutX="200.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
         <content>
-          <AnchorPane minWidth="0.0" prefHeight="802.0" prefWidth="1290.0" styleClass="content-pane">
+          <AnchorPane minWidth="0.0" prefHeight="600.0" prefWidth="1290.0" styleClass="content-pane">
                <children>
                   <VBox fx:id="contentHomePage" layoutX="-2.0" layoutY="-1.0">
                      <children>
@@ -76,7 +76,7 @@
                                     <Rectangle2D />
                                  </viewport>
                                  <image>
-                                    <Image url="@../../916fad535c44c5327e1f7312c3ba1f44.jpg" />
+                                    <Image url="@../../home-banner.jpg" />
                                  </image>
                               </ImageView>
                            </children>
@@ -89,7 +89,7 @@
       </ScrollPane>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
-            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
+            <MenuButton fx:id="userManagement" layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu">
                <items>
                   <MenuItem mnemonicParsing="false" text="Account" />
                   <MenuItem mnemonicParsing="false" text="Profile" />
@@ -100,11 +100,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../1234381.jpg" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="userAvatar" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
             <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />

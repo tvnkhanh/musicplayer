@@ -79,7 +79,7 @@
       </Pane>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
-            <MenuButton layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu" text="User">
+            <MenuButton fx:id="userManagement" layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu">
                <items>
                   <MenuItem mnemonicParsing="false" text="Account" />
                   <MenuItem mnemonicParsing="false" text="Profile" />
@@ -90,11 +90,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../1234381.jpg" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="userAvatar" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MenuButton>
             <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
@@ -229,12 +225,6 @@
                                                          </HBox.margin>
                                                       </Label>
                                                       <DatePicker fx:id="releaseDateBtn" styleClass="item-btn" />
-                                                      <Label prefWidth="100.0" styleClass="item-label" text="Artist ID" textFill="WHITE">
-                                                         <HBox.margin>
-                                                            <Insets left="50.0" />
-                                                         </HBox.margin>
-                                                      </Label>
-                                                      <TextField fx:id="artistIdText" prefWidth="200.0" styleClass="item-input" />
                                                    </children>
                                                    <padding>
                                                       <Insets left="50.0" />
@@ -284,6 +274,75 @@
                                        </children>
                                     </HBox>
                                     <TableView fx:id="albumTable" prefHeight="350.0" prefWidth="1290.0">
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </Tab>
+                        <Tab text="Artist Details">
+                           <content>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox prefHeight="170.0" prefWidth="200.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="800.0" spacing="20.0">
+                                             <children>
+                                                <Label prefWidth="100.0" styleClass="item-label" text="Artist ID" textFill="WHITE" />
+                                                <TextField fx:id="artistIdText" prefWidth="200.0" styleClass="item-input" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefWidth="800.0" spacing="20.0">
+                                             <children>
+                                                <Label prefWidth="100.0" styleClass="item-label" text="Album ID" textFill="WHITE" />
+                                                <TextField fx:id="albumIdTxt" prefWidth="200.0" styleClass="item-input" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1290.0" spacing="40.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#addArtistDetails" styleClass="management-btn">
+                                             <graphic>
+                                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Images/icons8-add-28.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchArtistDetails" styleClass="management-btn">
+                                             <graphic>
+                                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Images/icons8-search-28.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#editArtistDetails" styleClass="management-btn">
+                                             <graphic>
+                                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Images/icons8-edit-28.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#removeArtistDetails" styleClass="management-btn">
+                                             <graphic>
+                                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../Images/icons8-cancel-28.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="artistDetailsTable" prefHeight="350.0" prefWidth="1290.0">
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
