@@ -6,11 +6,13 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -42,7 +44,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToCreatePlaylistPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
+            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToPlaylistInfoPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -74,78 +76,108 @@
       </Pane>
       <ScrollPane layoutX="202.0" layoutY="50.0" prefHeight="600.0" prefWidth="1306.0" styleClass="home-content-pane">
          <content>
-            <AnchorPane prefHeight="655.0" prefWidth="1291.0" styleClass="content-pane">
+            <AnchorPane fx:id="playlistContent" prefHeight="600.0" prefWidth="1290.0" styleClass="content-pane">
                <children>
-                  <VBox fx:id="contentPlaylistContainer" layoutX="56.0" prefHeight="674.0" prefWidth="1179.0">
+                  <VBox spacing="30.0">
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="playlist-page-banner">
+                        <VBox fx:id="contentPlaylistContainer" spacing="20.0">
                            <children>
-                              <ImageView fx:id="imgPlaylist" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../395eb4a5e6aa04c8574425345cd816f5.894x894x1.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="225.0" layoutY="44.0" styleClass="lbl-playlist-page" text="Playlist" />
-                              <Label fx:id="playlistTitle" layoutX="227.0" layoutY="53.0" prefHeight="88.0" prefWidth="928.0" styleClass="lbl-playlist-name">
+                              <Pane prefHeight="200.0" prefWidth="200.0" styleClass="playlist-page-banner">
+                                 <children>
+                                    <StackPane prefHeight="200.0" prefWidth="200.0" styleClass="img-playlist">
+                                       <children>
+                                          <ImageView fx:id="imgPlaylist" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children>
+                                    </StackPane>
+                                    <Label layoutX="225.0" layoutY="44.0" styleClass="lbl-playlist-page" text="Playlist" />
+                                    <Label fx:id="playlistTitle" layoutX="227.0" layoutY="53.0" prefHeight="88.0" prefWidth="736.0" styleClass="lbl-playlist-name">
+                                       <font>
+                                          <Font size="60.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="playlistArtist" ellipsisString=" and more" layoutX="224.0" layoutY="147.0" prefHeight="25.0" prefWidth="460.0" styleClass="artist-info">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </Pane>
+                              <Pane>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <children>
+                                    <Button fx:id="playPlaylistBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="playlist-btn-special">
+                                       <graphic>
+                                          <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../Images/icons8-play-button-circled-50.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="pauseBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="media-player-btn" visible="false">
+                                       <graphic>
+                                          <ImageView fx:id="pauseImg" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../Images/icons8-pause-button-50.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </Pane>
+                              <HBox prefHeight="60.0">
+                                 <children>
+                                    <Label styleClass="playlist-header" text="#">
+                                       <HBox.margin>
+                                          <Insets left="24.0" right="30.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label styleClass="playlist-header" text="TITLE">
+                                       <HBox.margin>
+                                          <Insets right="596.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label styleClass="playlist-header" text="ALBUM">
+                                       <HBox.margin>
+                                          <Insets right="274.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label styleClass="playlist-header" text="COUNTRY">
+                                       <padding>
+                                          <Insets right="30.0" />
+                                       </padding></Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="100.0" />
+                           </padding>
+                        </VBox>
+                        <VBox fx:id="searchContent">
+                           <children>
+                              <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="368.0" promptText="What song do you want to add?" styleClass="search-input">
                                  <font>
-                                    <Font size="60.0" />
+                                    <Font size="14.0" />
                                  </font>
-                              </Label>
-                              <Label fx:id="playlistArtist" layoutX="224.0" layoutY="147.0" styleClass="artist-info">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
+                              </TextField>
+                              <VBox fx:id="searchResultPane" />
+                              <Pane prefHeight="100.0" prefWidth="200.0" />
                            </children>
                            <VBox.margin>
-                              <Insets bottom="30.0" left="20.0" top="30.0" />
+                              <Insets />
                            </VBox.margin>
-                        </Pane>
-                        <Pane>
-                           <VBox.margin>
-                              <Insets bottom="30.0" left="30.0" />
-                           </VBox.margin>
-                           <children>
-                              <Button fx:id="playPlaylistBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="playlist-btn-special">
-                                 <graphic>
-                                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Images/icons8-play-button-circled-50.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="pauseBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="media-player-btn" visible="false">
-                                 <graphic>
-                                    <ImageView fx:id="pauseImg" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../Images/icons8-pause-button-50.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </Pane>
-                        <HBox prefHeight="60.0" prefWidth="200.0">
-                           <children>
-                              <Label styleClass="playlist-header" text="#">
-                                 <HBox.margin>
-                                    <Insets right="30.0" />
-                                 </HBox.margin></Label>
-                              <Label styleClass="playlist-header" text="TITLE">
-                                 <HBox.margin>
-                                    <Insets right="600.0" />
-                                 </HBox.margin></Label>
-                              <Label styleClass="playlist-header" text="ALBUM">
-                                 <HBox.margin>
-                                    <Insets right="300.0" />
-                                 </HBox.margin></Label>
-                              <Label styleClass="playlist-header" text="DURATION" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="30.0" />
-                           </VBox.margin>
-                        </HBox>
+                           <padding>
+                              <Insets left="100.0" />
+                           </padding>
+                        </VBox>
                      </children>
                   </VBox>
                </children></AnchorPane>
@@ -159,7 +191,6 @@
                   <MenuItem mnemonicParsing="false" text="Profile" />
                   <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
                   <MenuItem mnemonicParsing="false" text="Support" />
-                  <MenuItem mnemonicParsing="false" text="Download" />
                   <MenuItem mnemonicParsing="false" text="Setting" />
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>

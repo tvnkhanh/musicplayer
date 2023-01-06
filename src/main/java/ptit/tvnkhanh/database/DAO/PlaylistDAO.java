@@ -1,6 +1,7 @@
 package ptit.tvnkhanh.database.DAO;
 
 import ptit.tvnkhanh.database.helper.DatabaseHelper;
+import ptit.tvnkhanh.database.model.Album;
 import ptit.tvnkhanh.database.model.Artist;
 import ptit.tvnkhanh.database.model.Playlist;
 import ptit.tvnkhanh.database.model.Track;
@@ -12,16 +13,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PlaylistDAO {
-    public List<Playlist> getAllPlaylist() throws Exception {
+    public List<Playlist> getAllPlaylist(int userId) throws Exception {
         List<Playlist> lstPlaylist = new ArrayList<>();
-        String sql = "select * from Playlist";
+        String sql = "select * from Playlist where USER_ID= ?";
         try (
                 Connection con = DatabaseHelper.openConnection();
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);) {
-
+                PreparedStatement pstm = con.prepareStatement(sql);)
+        {
+            pstm.setInt(1, userId);
+            ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                Playlist playlist = new Playlist(rs.getNString("TITLE"), rs.getString("IMAGE"), rs.getInt("USER_ID"));
+                Playlist playlist = new Playlist(rs.getNString("TITLE"), rs.getString("IMAGE"),
+                        rs.getInt("USER_ID"));
 
                 lstPlaylist.add(playlist);
             }
@@ -59,42 +62,6 @@ public class PlaylistDAO {
 
     }
 
-    public Playlist findPlaylist(int id) throws Exception {
-        String sql = "select * from Playlist where USER_ID= ?";
-        try (
-                Connection con = DatabaseHelper.openConnection();
-                PreparedStatement pstm = con.prepareStatement(sql);)
-        {
-            pstm.setInt(1, id);
-            ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                Playlist playlist = new Playlist(rs.getNString("TITLE"), rs.getString("IMAGE"), rs.getInt("USER_ID"));
-
-                return playlist;
-            }
-            return null;
-        }
-
-    }
-
-    public Playlist findPlaylist(String title) throws Exception {
-        String sql = "select * from Playlist where TITLE= ?";
-        try (
-                Connection con = DatabaseHelper.openConnection();
-                PreparedStatement pstm = con.prepareStatement(sql);)
-        {
-            pstm.setString(1, title);
-            ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                Playlist playlist = new Playlist(rs.getNString("TITLE"), rs.getString("IMAGE"), rs.getInt("USER_ID"));
-
-                return playlist;
-            }
-            return null;
-        }
-
-    }
-
     public boolean deletePlaylist(int id) throws Exception {
         String sql = "delete from Playlist where PLAYLIST_ID= ?";
         try (
@@ -107,18 +74,20 @@ public class PlaylistDAO {
 
     }
 
-    public List<Artist> getArtistInfo(int playlistId) throws Exception {
+    public List<Artist> getArtistInfo(int userId, int playlistId) {
         List<Artist> artists = new ArrayList<>();
         try {
             Connection con = DatabaseHelper.openConnection();
-            CallableStatement stmt = con.prepareCall("{call SP_PLAYLIST_ARTIST_NAME(?)}");
-            stmt.setInt(1, playlistId);
+            CallableStatement stmt = con.prepareCall("{call SP_PLAYLIST_ARTIST_NAME(?,?)}");
+            stmt.setInt(1, userId);
+            stmt.setInt(2, playlistId);
             Boolean hasResult = stmt.execute();
             if (hasResult) {
                 ResultSet rs = stmt.getResultSet();
 
                 while (rs.next()) {
-                    Artist artist = new Artist(rs.getInt("ARTIST_ID"), rs.getNString("ARTIST"), rs.getNString("COUNTRY"));
+                    Artist artist = new Artist(rs.getInt("ARTIST_ID"), rs.getNString("ARTIST"),
+                            rs.getNString("COUNTRY"));
                     artists.add(artist);
                 }
             }
@@ -130,16 +99,21 @@ public class PlaylistDAO {
         return artists;
     }
 
-    public List<Integer> getPlaylistId() throws SQLException {
+    public List<Integer> getPlaylistId(int userId) throws SQLException {
         List<Integer> playlistIds = new ArrayList<>();
-        String sql = "SELECT PLAYLIST_ID FROM PLAYLIST ORDER BY PLAYLIST_ID";
         try (
                 Connection con = DatabaseHelper.openConnection();
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
+                CallableStatement stmt = con.prepareCall("{call SP_GET_PLAYLIST_ID(?)}");
+
         ) {
-            while (rs.next()) {
-                playlistIds.add(rs.getInt("PLAYLIST_ID"));
+            stmt.setInt(1, userId);
+            Boolean hasResult = stmt.execute();
+            if (hasResult) {
+                ResultSet rs = stmt.getResultSet();
+                while (rs.next()) {
+                    playlistIds.add(rs.getInt("PLAYLIST_ID"));
+                }
+
             }
             return playlistIds;
         }

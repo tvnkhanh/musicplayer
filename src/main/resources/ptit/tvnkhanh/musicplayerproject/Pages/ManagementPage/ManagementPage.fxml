@@ -47,7 +47,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToCreatePlaylistPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
+            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToPlaylistInfoPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -85,7 +85,6 @@
                   <MenuItem mnemonicParsing="false" text="Profile" />
                   <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
                   <MenuItem mnemonicParsing="false" text="Support" />
-                  <MenuItem mnemonicParsing="false" text="Download" />
                   <MenuItem mnemonicParsing="false" text="Setting" />
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" styleClass="pane-background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.controller.LogInSignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" styleClass="pane-background" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.controller.LogInController">
    <children>
       <Pane layoutX="545.0" layoutY="100.0" prefHeight="550.0" prefWidth="420.0" styleClass="login-pane">
          <children>
@@ -34,7 +34,7 @@
                   <Font size="28.0" />
                </font>
             </Label>
-            <Button layoutX="90.0" layoutY="328.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginAction" prefHeight="32.0" prefWidth="250.0" styleClass="login-btn" text="LOG IN" />
+            <Button fx:id="loginBtn" layoutX="90.0" layoutY="328.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="250.0" styleClass="login-btn" text="LOG IN" />
             <Label layoutX="104.0" layoutY="405.0" styleClass="des-text" text="Don't have an account?" textFill="WHITE">
                <font>
                   <Font size="14.0" />

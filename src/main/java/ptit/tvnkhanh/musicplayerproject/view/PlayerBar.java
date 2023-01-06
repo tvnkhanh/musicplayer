@@ -3,9 +3,6 @@ package ptit.tvnkhanh.musicplayerproject.view;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,21 +11,18 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import ptit.tvnkhanh.database.helper.DatabaseHelper;
 import ptit.tvnkhanh.musicplayerproject.Main;
 import ptit.tvnkhanh.musicplayerproject.controller.Controller;
+import ptit.tvnkhanh.musicplayerproject.controller.PlaylistPageController;
 
 import java.io.File;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class PlayerBar {
     private Controller controller = new Controller();
@@ -43,13 +37,10 @@ public class PlayerBar {
     public static boolean isShuffle = false;
     public static boolean isMute = false;
     public static int songNumber;
-    public static ArrayList<File> songs;
-    public static ArrayList<File> backupSongs;
+    public static List<Integer> songNumberList = new ArrayList<>();
+    public static HashMap<Integer, File> songs = new HashMap<Integer, File>();
     public static Media media;
     public static MediaPlayer mediaPlayer;
-
-    public static File directory;
-    public static File[] files;
     public static Timeline timeLine;
     public static  double volumeValue = 1;
 
@@ -223,19 +214,19 @@ public class PlayerBar {
         nextBtn.getStyleClass().add("media-player-btn");
         loopBtn.getStyleClass().add("media-player-btn");
         volumeBtn.getStyleClass().add("media-player-btn");
-        if (isRunning == true) {
+        if (isRunning) {
             playPauseBtn.setGraphic(pauseImg);
             playerController.getChildren().addAll(shuffleBtn, prevBtn, playPauseBtn, nextBtn, loopBtn);
         } else {
             playPauseBtn.setGraphic(playImg);
             playerController.getChildren().addAll(shuffleBtn, prevBtn, playPauseBtn, nextBtn, loopBtn);
         }
-        if (isLoop == true) {
+        if (isLoop) {
             loopBtn.setGraphic(activeLoopImg);
         } else {
             loopBtn.setGraphic(loopImg);
         }
-        if (isShuffle == true) {
+        if (isShuffle) {
             shuffleBtn.setGraphic(activeShuffleImg);
         } else {
             shuffleBtn.setGraphic(shuffleImg);
@@ -262,7 +253,7 @@ public class PlayerBar {
 
         volumeSettingContainer.setPrefWidth(prefWidthSongVolume);
         volumeSettingContainer.setPrefHeight(controller.getPrefHeightPlayer());
-        if (isMute == true) {
+        if (isMute) {
             volumeBtn.setGraphic(muteImg);
         } else {
             volumeBtn.setGraphic(volumeImg);
@@ -290,39 +281,33 @@ public class PlayerBar {
         prevBtn.setOnAction(actionEvent -> prevSong());
         trackProgress();
 
-        songSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                timeLine.stop();
-                timeLine.getKeyFrames().clear();
-                timeLine = null;
-                double current = (mouseEvent.getX() / songSlider.getWidth()) * songSlider.getMax();
-                mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(current));
-                if (isRunning == false) {
-                    playPauseSong();
-                } else {
-                    trackProgress();
-                }
+        songSlider.setOnMouseClicked(mouseEvent -> {
+            timeLine.stop();
+            timeLine.getKeyFrames().clear();
+            timeLine = null;
+            double current = (mouseEvent.getX() / songSlider.getWidth()) * songSlider.getMax();
+            mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(current));
+            if (!isRunning) {
+                playPauseSong();
+            } else {
+                trackProgress();
             }
         });
 
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                volumeValue = volumeSlider.getValue();
-                if (volumeValue > 0) {
-                    isMute = false;
-                    volumeBtn.setGraphic(volumeImg);
-                } else {
-                    isMute = true;
-                    volumeBtn.setGraphic(muteImg);
-                }
-                mediaPlayer.setVolume(volumeValue);
+        volumeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            volumeValue = volumeSlider.getValue();
+            if (volumeValue > 0) {
+                isMute = false;
+                volumeBtn.setGraphic(volumeImg);
+            } else {
+                isMute = true;
+                volumeBtn.setGraphic(muteImg);
             }
+            mediaPlayer.setVolume(volumeValue);
         });
 
         volumeBtn.setOnAction(actionEvent -> {
-            if (isMute == false) {
+            if (!isMute) {
                 mediaPlayer.setVolume(0);
                 volumeSlider.setValue(0);
                 volumeBtn.setGraphic(muteImg);
@@ -331,7 +316,7 @@ public class PlayerBar {
         });
 
         loopBtn.setOnAction(actionEvent -> {
-            if (isLoop == false) {
+            if (!isLoop) {
                 isLoop = true;
                 loopSong();
                 loopBtn.setGraphic(activeLoopImg);
@@ -343,7 +328,7 @@ public class PlayerBar {
         });
 
         shuffleBtn.setOnAction(actionEvent -> {
-            if (isShuffle == false) {
+            if (!isShuffle) {
                 isShuffle = true;
                 shuffleBtn.setGraphic(activeShuffleImg);
                 shuffleQueue();
@@ -359,7 +344,7 @@ public class PlayerBar {
 
 
     public void playPauseSong() {
-        if (isRunning == false) {
+        if (!isRunning) {
             mediaPlayer.play();
             mediaPlayer.setVolume(volumeValue);
             playPauseBtn.setGraphic(pauseImg);
@@ -374,12 +359,24 @@ public class PlayerBar {
     }
 
     public void nextSong() {
-        if (songNumber < songs.size() - 1) {
-            songNumber++;
+        for (int i = 0; i < songNumberList.size(); i++) {
+            if (i != songNumberList.size() - 1 && songNumberList.get(i) == songNumber) {
+                songNumber = songNumberList.get(i + 1);
+                break;
+            }
+            else if (i == songNumberList.size() - 1 && songNumberList.get(songNumberList.size() - 1) == songNumber) {
+                songNumber = songNumberList.get(0);
+                break;
+            }
         }
-        else {
-            songNumber = 0;
-        }
+
+        nameOfSong = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(0);
+        nameOfArtist = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(1);
+        imgURl = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(2);
+        songName.setText(nameOfSong);
+        artistName.setText(nameOfArtist);
+        songImg.setImage(new Image(imgURl));
+
         mediaPlayer.stop();
         isRunning = false;
         if (timeLine != null) {
@@ -391,12 +388,24 @@ public class PlayerBar {
     }
 
     public void prevSong() {
-        if (songNumber > 0) {
-            songNumber--;
+        for (int i = 0; i < songNumberList.size(); i++) {
+            if (i != 0 && songNumberList.get(i) == songNumber) {
+                songNumber = songNumberList.get(i - 1);
+                break;
+            }
+            else if (i == 0 && songNumberList.get(0) == songNumber) {
+                songNumber = songNumberList.get(songNumberList.size() - 1);
+                break;
+            }
         }
-        else {
-            songNumber = songs.size() - 1;
-        }
+
+        nameOfSong = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(0);
+        nameOfArtist = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(1);
+        imgURl = PlaylistPageController.playlistSongInfo.get(songNumber + 1).get(2);
+        songName.setText(nameOfSong);
+        artistName.setText(nameOfArtist);
+        songImg.setImage(new Image(imgURl));
+
         mediaPlayer.stop();
         isRunning = false;
         if (timeLine != null) {
@@ -410,37 +419,39 @@ public class PlayerBar {
     public void autoNextSong() {
         double current = mediaPlayer.getCurrentTime().toSeconds();
         double end = media.getDuration().toSeconds();
-        if (current == end && isLoop == false) {
+        if (current == end && !isLoop) {
             nextSong();
             trackProgress();
         }
     }
 
     public void loopSong() {
-        if (isLoop == true) {
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    isRunning = false;
-                    mediaPlayer.seek(Duration.ZERO);
-                    playPauseSong();
-                }
+        if (isLoop) {
+            mediaPlayer.setOnEndOfMedia(() -> {
+                isRunning = false;
+                mediaPlayer.seek(Duration.ZERO);
+                playPauseSong();
             });
         } else {
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    autoNextSong();
-                }
-            });
+            mediaPlayer.setOnEndOfMedia(this::autoNextSong);
         }
     }
 
     public void shuffleQueue() {
-        if (isShuffle == true) {
-            Collections.shuffle(songs);
+        if (isShuffle) {
+            Collections.shuffle(songNumberList, new Random(1000));
         } else {
-            songs = backupSongs;
+            unshuffle(songNumberList, new Random(1000));
+        }
+    }
+
+    private static <T> void unshuffle(List<T> list, Random rnd) {
+        int[] seq = new int[list.size()];
+        for (int i = seq.length; i >= 1; i--) {
+            seq[i - 1] = rnd.nextInt(i);
+        }
+        for (int i = 0; i < seq.length; i++) {
+            Collections.swap(list, i, seq[i]);
         }
     }
 
@@ -449,9 +460,9 @@ public class PlayerBar {
         minute = n / 60;
         second = n % 60;
         if (second < 10) {
-            return String.valueOf(minute) + ":0" + String.valueOf(second);
+            return minute + ":0" + second;
         }
-        return  String.valueOf(minute) + ":" + String.valueOf(second);
+        return minute + ":" + second;
     }
 
     public void trackProgress() {
@@ -476,9 +487,8 @@ public class PlayerBar {
         timeLine.play();
     }
 
-    public void startPlaylist(int num) {
-        backupSongs = songs;
-        media = new Media(songs.get(num).toURI().toString());
+    public void startPlaylist() {
+        media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
     }
 }

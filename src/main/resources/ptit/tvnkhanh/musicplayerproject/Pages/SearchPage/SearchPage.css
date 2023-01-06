@@ -8,3 +8,22 @@
 .search-content {
     -fx-background-color: -content-page-color;
 }
+
+.song-item:hover {
+    -fx-background-color: #343434;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.song-info, .artist-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-line-spacing: 60;
+    -fx-text-fill: -playlist-text-theme-color;
+}
+
+.song-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -white-color;
+}

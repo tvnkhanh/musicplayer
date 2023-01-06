@@ -1,24 +1,40 @@
 package ptit.tvnkhanh.database.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class User {
-    private StringProperty userName;
-    private StringProperty password;
-    private StringProperty role;
-    private StringProperty email;
-    private StringProperty avatar_link;
+    private IntegerProperty userId = new SimpleIntegerProperty();
+    private StringProperty userName = new SimpleStringProperty();
+    private StringProperty password = new SimpleStringProperty();
+    private StringProperty role = new SimpleStringProperty();
+    private StringProperty email = new SimpleStringProperty();
+    private StringProperty avatar_link = new SimpleStringProperty("D:\\music-player-project\\src\\main\\resources\\ptit\\tvnkhanh\\musicplayerproject\\Images\\user-default-img.png");
 
     public User() {
     }
 
-    public User(String userName, String password, String role, String email, String avatar_link) {
+    public User(int userId, String userName, String password, String role, String email, String avatar_link) {
+        this.userId = new SimpleIntegerProperty(userId);
         this.userName = new SimpleStringProperty(userName);
         this.password = new SimpleStringProperty(password);
         this.role = new SimpleStringProperty(role);
         this.email = new SimpleStringProperty(email);
         this.avatar_link = new SimpleStringProperty(avatar_link);
+    }
+
+    public int getUserId() {
+        return userId.get();
+    }
+
+    public IntegerProperty userIdProperty() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId.set(userId);
     }
 
     public String getUserName() {

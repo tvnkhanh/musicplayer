@@ -1,6 +1,3 @@
-.playlist-page-banner {
-
-}
 
 .lbl-playlist-page {
     -fx-font-size: 12px;
@@ -40,10 +37,18 @@
     -fx-text-fill: -playlist-text-theme-color;
 }
 
+.favorite-btn {
+    -fx-background-color: -content-page-color;
+}
+
 .song-item:hover {
     -fx-background-color: #343434;
     -fx-background-radius: 5px;
     -fx-cursor: hand;
+}
+
+.song-item:hover .favorite-btn {
+    -fx-background-color: #343434;
 }
 
 .song-info, .artist-name {

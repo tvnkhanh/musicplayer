@@ -15,6 +15,7 @@
 
 .button {
     -fx-background-color: -black-color;
+    -fx-background-radius: 5px;
     -fx-text-fill: -button-color;
     -fx-font-size: 14px;
     -fx-font-weight: 700;

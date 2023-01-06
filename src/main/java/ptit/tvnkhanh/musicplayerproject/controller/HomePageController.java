@@ -11,8 +11,6 @@ import javafx.scene.layout.VBox;
 import ptit.tvnkhanh.musicplayerproject.view.PlayerBar;
 
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomePageController extends Controller implements Initializable {
@@ -27,7 +25,6 @@ public class HomePageController extends Controller implements Initializable {
     private Button managementBtn;
     @FXML
     private VBox contentHomePage;
-    private ArrayList<VBox> playlists = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -37,7 +34,7 @@ public class HomePageController extends Controller implements Initializable {
         contentHomePage.setSpacing(-100);
 
         try {
-            createPlaylist(contentHomePage, "Made For You");
+            createPlaylist(contentHomePage, "Made For You", "Home");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

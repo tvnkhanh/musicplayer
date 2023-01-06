@@ -8,24 +8,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.jetbrains.annotations.NotNull;
 import ptit.tvnkhanh.database.DAO.PlaylistDAO;
 import ptit.tvnkhanh.database.model.Artist;
 import ptit.tvnkhanh.database.model.Playlist;
-import ptit.tvnkhanh.database.model.Track;
 import ptit.tvnkhanh.musicplayerproject.Main;
 import ptit.tvnkhanh.musicplayerproject.view.PlayerBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,9 +52,20 @@ public class Controller {
     public static Playlist onClickPlaylist = new Playlist();
     public static String onClickPlaylistArtist;
     public static int onClickPlaylistId;
+    public static int onClickPlaylistUserId;
 
     //    Switch Page Method:
     public void switchToHomePage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/HomePage/HomePage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/HomePage/HomePage.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToHomePageKeyEvent(KeyEvent e) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("Pages/HomePage/HomePage.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -71,6 +80,7 @@ public class Controller {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/PlaylistPage/PlaylistPage.css").toExternalForm());
         scene.getStylesheets().add(Main.class.getResource("Pages/SearchPage/SearchPage.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -88,6 +98,17 @@ public class Controller {
 
     public void switchToCreatePlaylistPage(ActionEvent e) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("Pages/CreatePlaylistPage/CreatePlaylistPage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/PlaylistPage/PlaylistPage.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/CreatePlaylistPage/CreatePlaylistPage.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToPlaylistInfoPage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/CreatePlaylistPage/PlaylistInfoPage.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
@@ -127,14 +148,16 @@ public class Controller {
     }
 
     public void switchToLogInPageFromMenuBar(ActionEvent e) throws IOException {
-        PlayerBar.mediaPlayer.pause();
-        PlayerBar.mediaPlayer.seek(new Duration(0));
-        PlayerBar.isRunning = false;
-        PlayerBar.songs = new ArrayList<>();
-        PlayerBar playerBar = new PlayerBar();
-        playerBar.setImgURl(null);
-        playerBar.setNameOfSong("");
-        playerBar.setNameOfArtist("");
+        if (PlayerBar.mediaPlayer != null) {
+            PlayerBar.mediaPlayer.pause();
+            PlayerBar.mediaPlayer.seek(new Duration(0));
+            PlayerBar.isRunning = false;
+            PlayerBar.songs = new HashMap<>();
+            PlayerBar playerBar = new PlayerBar();
+            playerBar.setImgURl(null);
+            playerBar.setNameOfSong("");
+            playerBar.setNameOfArtist("");
+        }
 
         root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/LogInPage.fxml"));
         stage = (Stage)((MenuItem)e.getTarget()).getParentPopup().getOwnerWindow();
@@ -146,6 +169,16 @@ public class Controller {
     }
 
     public void switchToLogInPage(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/LogInPage.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(Main.class.getResource("Pages/GlobalStyle.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("Pages/LogInSignUpPage/LogInSignUp.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLogInPage(KeyEvent e) throws IOException {
         root = FXMLLoader.load(Main.class.getResource("Pages/LogInSignUpPage/LogInPage.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -190,26 +223,38 @@ public class Controller {
         return playlistItems;
     }
 
-    public HBox createPlaylist(VBox wrapper, String topic) throws Exception {
+    public HBox createPlaylist(VBox wrapper, String topic, String currentPage) throws Exception {
         HBox playlistTray = createListPlaylist(wrapper, topic);
         PlaylistDAO playlistDAO = new PlaylistDAO();
         int index = 0;
 
-        List<Playlist> playlists = playlistDAO.getAllPlaylist();
-        List<Integer> playlistIds = playlistDAO.getPlaylistId();
-        for (Playlist playlist : playlists) {
-            List<Artist> lstArtist = playlistDAO.getArtistInfo(playlistIds.get(index));
+        List<Playlist> playlists;
+        List<Integer> playlistIds;
+        if (currentPage == "Home") {
+            playlists = playlistDAO.getAllPlaylist(1);
+             playlistIds= playlistDAO.getPlaylistId(1);
+        } else {
+            playlists = playlistDAO.getAllPlaylist(LogInController.currentUser.getUserId());
+            playlistIds= playlistDAO.getPlaylistId(LogInController.currentUser.getUserId());
+        }
 
-            String nameOfPlaylist = playlist.getTitle();
-            String nameOfArtist = "";
-            for (int i = 0; i < lstArtist.size(); i++) {
-                if (i != lstArtist.size() - 1) {
-                    nameOfArtist += lstArtist.get(i).getName() + ", ";
-                } else {
-                    nameOfArtist += lstArtist.get(i).getName();
-                }
+        for (Playlist playlist : playlists) {
+            List<Artist> lstArtist;
+            if (Objects.equals(currentPage, "Home")) {
+                lstArtist = playlistDAO.getArtistInfo(1, playlistIds.get(index));
+            } else {
+                lstArtist = playlistDAO.getArtistInfo(LogInController.currentUser.getUserId(), playlistIds.get(index));
             }
 
+            String nameOfPlaylist = playlist.getTitle();
+            StringBuilder nameOfArtist = new StringBuilder();
+            for (int i = 0; i < lstArtist.size(); i++) {
+                if (i != lstArtist.size() - 1) {
+                    nameOfArtist.append(lstArtist.get(i).getName()).append(", ");
+                } else {
+                    nameOfArtist.append(lstArtist.get(i).getName());
+                }
+            }
 
             VBox playlistUI = new VBox();
             StackPane imageWrapper = new StackPane();
@@ -227,7 +272,7 @@ public class Controller {
             playlistName.setText(nameOfPlaylist);
             playlistName.getStyleClass().add("playlist-name");
 
-            artistsName.setText(nameOfArtist);
+            artistsName.setText(nameOfArtist.toString());
             artistsName.getStyleClass().add("artist-playlist");
             artistsName.setMinWidth(160);
             artistsName.setMaxWidth(160);
@@ -238,18 +283,24 @@ public class Controller {
 
             playlistTray.getChildren().add(playlistUI);
 
-            setEventForPlaylist(playlistUI, playlist, nameOfArtist, playlistIds.get(index));
+            if (Objects.equals(currentPage, "Home")) {
+                setEventForPlaylist(playlistUI, playlist, nameOfArtist.toString(), playlistIds.get(index), 1);
+            } else {
+                setEventForPlaylist(playlistUI, playlist, nameOfArtist.toString(), playlistIds.get(index),
+                        LogInController.currentUser.getUserId());
+            }
             index++;
         }
         return playlistTray;
     }
 
-    public void setEventForPlaylist(VBox playlistUI, Playlist playlist, String artistNames, int playlistId) {
+    public void setEventForPlaylist(VBox playlistUI, Playlist playlist, String artistNames, int playlistId, int userId) {
         playlistUI.setOnMouseClicked((e) -> {
             try {
                 onClickPlaylist = playlist;
                 onClickPlaylistArtist = artistNames;
                 onClickPlaylistId = playlistId;
+                onClickPlaylistUserId = userId;
                 switchToPlaylistPage(e);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -261,13 +312,13 @@ public class Controller {
     public void checkUser(MenuButton menuButton, Button managementBtn, ImageView userAvatar) {
         menuButton.setMinWidth(134);
         menuButton.setMaxWidth(134);
-        if (Objects.equals(LogInSignUpController.currentUser.getRole(), "admin")) {
-            menuButton.setText(LogInSignUpController.currentUser.getUserName());
-            userAvatar.setImage(new Image(LogInSignUpController.currentUser.getAvatar_link()));
+        if (Objects.equals(LogInController.currentUser.getRole(), "admin")) {
+            menuButton.setText(LogInController.currentUser.getUserName());
+            userAvatar.setImage(new Image(LogInController.currentUser.getAvatar_link()));
             managementBtn.setVisible(true);
         } else {
-            menuButton.setText(LogInSignUpController.currentUser.getUserName());
-            userAvatar.setImage(new Image(LogInSignUpController.currentUser.getAvatar_link()));
+            menuButton.setText(LogInController.currentUser.getUserName());
+            userAvatar.setImage(new Image(LogInController.currentUser.getAvatar_link()));
             managementBtn.setVisible(false);
         }
     }

@@ -5,11 +5,11 @@ import javafx.beans.property.*;
 import java.sql.Date;
 
 public class Album {
-    private IntegerProperty albumId;
-    private StringProperty name;
-    private StringProperty imgURI;
-    private ObjectProperty<Date> releaseDate;
-    private StringProperty single;
+    private IntegerProperty albumId = new SimpleIntegerProperty();
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty imgURI = new SimpleStringProperty();
+    private ObjectProperty<Date> releaseDate = new SimpleObjectProperty<>();
+    private StringProperty single = new SimpleStringProperty();
 
     public Album() {
     }

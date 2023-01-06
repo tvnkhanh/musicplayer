@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="wrapper" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ptit.tvnkhanh.musicplayerproject.controller.LibraryPageController">
    <children>
@@ -38,7 +38,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToCreatePlaylistPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
+            <Button fx:id="createPlayListBtn" layoutX="17.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToPlaylistInfoPage" prefHeight="36.0" prefWidth="183.0" text="Created Playlist">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -68,11 +68,6 @@
             </Button>
          </children>
       </Pane>
-      <Label layoutX="529.0" layoutY="120.0" text="Library Page">
-         <font>
-            <Font size="64.0" />
-         </font>
-      </Label>
       <Pane layoutX="202.0" prefHeight="52.0" prefWidth="1308.0" styleClass="navbar">
          <children>
             <MenuButton fx:id="userManagement" layoutX="1125.0" layoutY="8.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" styleClass="user-menu">
@@ -81,7 +76,6 @@
                   <MenuItem mnemonicParsing="false" text="Profile" />
                   <MenuItem mnemonicParsing="false" text="Upgrade to Premium" />
                   <MenuItem mnemonicParsing="false" text="Support" />
-                  <MenuItem mnemonicParsing="false" text="Download" />
                   <MenuItem mnemonicParsing="false" text="Setting" />
                   <MenuItem mnemonicParsing="false" onAction="#switchToLogInPageFromMenuBar" text="Log out" />
                </items>
@@ -92,5 +86,14 @@
             <Button fx:id="managementBtn" layoutX="974.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToManagementPage" prefHeight="36.0" prefWidth="115.0" styleClass="management-btn" text="Management" />
          </children>
       </Pane>
+      <ScrollPane layoutX="200.0" layoutY="50.0" prefHeight="600.0" prefWidth="1306.0" styleClass="content-pane">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1290.0" styleClass="content-pane">
+               <children>
+                  <VBox fx:id="contentLibPage" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

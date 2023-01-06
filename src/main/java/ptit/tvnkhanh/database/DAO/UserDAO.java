@@ -17,8 +17,8 @@ public class UserDAO {
                 ResultSet rs = stmt.executeQuery(sql);) {
 
             while (rs.next()) {
-                User user = new User(rs.getNString("USERNAME"), rs.getString("PASSWORD"), rs.getString("ROLE"),
-                        rs.getNString("EMAIL"), rs.getString("AVATAR_LINK"));
+                User user = new User(rs.getInt("USER_ID"), rs.getNString("USERNAME"), rs.getString("PASSWORD"),
+                        rs.getString("ROLE"), rs.getNString("EMAIL"), rs.getString("AVATAR_LINK"));
 
                 lstUser.add(user);
             }
@@ -34,8 +34,8 @@ public class UserDAO {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);) {
             while (rs.next()) {
-                user = new User(rs.getNString("USERNAME"), rs.getString("PASSWORD"), rs.getString("ROLE"),
-                        rs.getNString("EMAIL"), rs.getString("AVATAR_LINK"));
+                user = new User(rs.getInt("USER_ID"), rs.getNString("USERNAME"), rs.getString("PASSWORD"),
+                        rs.getString("ROLE"), rs.getNString("EMAIL"), rs.getString("AVATAR_LINK"));
             }
             return user;
         }

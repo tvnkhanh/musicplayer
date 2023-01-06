@@ -1,0 +1,9 @@
+.playlist-custom-form {
+    -fx-background-color: #333;
+    -fx-background-radius: 5px;
+}
+
+.select-img-btn {
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
