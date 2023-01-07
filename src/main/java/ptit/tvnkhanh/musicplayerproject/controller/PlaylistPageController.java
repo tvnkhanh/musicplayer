@@ -12,8 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import ptit.tvnkhanh.database.DAO.PlaylistDAO;
 import ptit.tvnkhanh.database.DAO.PlaylistDetailsDAO;
 import ptit.tvnkhanh.database.helper.DatabaseHelper;
@@ -229,6 +227,7 @@ public class PlaylistPageController extends Controller implements Initializable 
                 playlistDetails = new PlaylistDetails(playlistId, trackId);
                 try {
                     playlistDetailsDAO.insertPlaylistDetails(playlistDetails);
+                    switchToPlaylistPage(e);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

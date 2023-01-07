@@ -1,10 +1,8 @@
 package ptit.tvnkhanh.database.DAO;
 
 import ptit.tvnkhanh.database.helper.DatabaseHelper;
-import ptit.tvnkhanh.database.model.Album;
 import ptit.tvnkhanh.database.model.Artist;
 import ptit.tvnkhanh.database.model.Playlist;
-import ptit.tvnkhanh.database.model.Track;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package ptit.tvnkhanh.musicplayerproject;
 
-import java.sql.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,7 +21,7 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         launch();
     }
 }
